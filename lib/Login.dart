@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gumen/Animation/FadeAnimation.dart';
 
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -25,7 +27,7 @@ class Login extends StatelessWidget {
                           image: AssetImage('assets/background.png'),
                           fit: BoxFit.fill
                         )
-                      ),
+                      ), 
                     )),
                   ),
                   Positioned(
