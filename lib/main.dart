@@ -12,6 +12,7 @@ void main() {
 ));
 }
 
+int n1;
 
 class MyApp  extends StatefulWidget {
   @override
