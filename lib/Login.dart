@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gumen/Animation/FadeAnimation.dart';
+import 'Ventas.dart';
 
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     SystemChrome.setEnabledSystemUIOverlays([]);
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromRGBO(254, 228, 62, 10),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -17,19 +18,7 @@ class Login extends StatelessWidget {
               height: 400,
               child: Stack(
                 children: <Widget>[
-                  Positioned(
-                    top: -40,
-                    height: 400,
-                    width: width,
-                    child: FadeAnimation(1, Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/background.png'),
-                          fit: BoxFit.fill
-                        )
-                      ), 
-                    )),
-                  ),
+                  
                   Positioned(
                     height: 400,
                     width: width+20,
@@ -64,7 +53,7 @@ class Login extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  FadeAnimation(1.5, Text("Login", style: TextStyle(color: Color.fromRGBO(49, 39, 79, 1), fontWeight: FontWeight.bold, fontSize: 30),)),
+                  FadeAnimation(1.5, Text("Login", style: TextStyle(color: Color.fromRGBO(0, 0, 0, 100), fontWeight: FontWeight.bold, fontSize: 30),)),
                   SizedBox(height: 30,),
                   FadeAnimation(1.7, Container(
                     decoration: BoxDecoration(
@@ -72,7 +61,7 @@ class Login extends StatelessWidget {
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: Color.fromRGBO(196, 135, 198, .3),
+                          color: Color.fromRGBO(0, 0, 0, 100),
                           blurRadius: 20,
                           offset: Offset(0, 10),
                         )
@@ -101,37 +90,29 @@ class Login extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 60),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      color: Color.fromRGBO(49, 39, 79, 1),
+                      color: Colors.black,
                     ),
                     child: Center(
-                      child: Text("Login", style: TextStyle(color: Colors.white),),
+                      child: RaisedButton(
+                              color: Colors.black,
+                             child: Text("Login", style: TextStyle(color: Colors.white),),
+                             onPressed: (){
+
+                               Route route = MaterialPageRoute(builder: (bc) => Ventas());
+                               Navigator.of(context).push(route);
+                             },
+                      )
+
                     ),
-                  )),
+
+                  )
+                  
+                  ),
                   
                 ],
               ),
             )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-
-class SecondRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Route"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
         ),
       ),
     );

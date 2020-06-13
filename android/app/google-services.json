@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "924079982212",
+    "firebase_url": "https://gumen-48803.firebaseio.com",
+    "project_id": "gumen-48803",
+    "storage_bucket": "gumen-48803.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924079982212:android:532bb587acd0aa1338a4d1",
+        "android_client_info": {
+          "package_name": "com.example.gumen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924079982212-haootaipgmtbhrjgvk9gf2l2t8t24q9h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOE2eYEvzyqlBbQ3y5GASXX_zJ1VDagB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924079982212-haootaipgmtbhrjgvk9gf2l2t8t24q9h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
