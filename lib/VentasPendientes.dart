@@ -21,8 +21,8 @@ class _VentasPendientesState extends State<VentasPendientes> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Nombre: ${doc.data['Nombre']}             ${doc.data['Producto']} ',
-              style: TextStyle(fontSize: 20),
+              'Nombre: ${doc.data['Nombre']}            ${doc.data['Producto']} ',
+              style: TextStyle(fontSize: 18),
             ),
             Text(
               'Cantidad: ${doc.data['Cantidad']} Kg',

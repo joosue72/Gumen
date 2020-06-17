@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'Login.dart';
 import 'constants.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
@@ -14,7 +13,7 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: gradientEndColor,
       body: Container(
@@ -84,7 +83,9 @@ class _MenuState extends State<Menu> {
                         Navigator.push(
                           context,
                           PageRouteBuilder(
-                            pageBuilder: (context, a, b) => Login()
+                            pageBuilder: (context, a, b) => Menu(
+
+                            ),
                           ),
                         );
                       },
@@ -177,6 +178,29 @@ class _MenuState extends State<Menu> {
               ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(36.0),
+          ),
+          color: navigationColor,
+        ),
+        padding: const EdgeInsets.all(24),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            IconButton(
+              icon: Image.asset('assets/menu_icon.png'),
+              onPressed: () {},
+            ),
+            
+            IconButton(
+              icon: Image.asset('assets/profile_icon.png'),
+              onPressed: () {},
+            ),
+          ],
         ),
       ),
     );

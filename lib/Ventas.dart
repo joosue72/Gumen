@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'VentasPendientes.dart';
+import 'package:intl/intl.dart';
+import 'Login.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 
 class Ventas extends StatefulWidget {
+  //bool pendiente = false; //lo acabo de poner lol
   @override
   _VentasState createState() => _VentasState();
 }
@@ -12,6 +16,10 @@ String nombre;
 double cantidad;
 double costo;
 String producto;
+DateTime now = DateTime.now();
+String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+
+
 
 class _VentasState extends State<Ventas> {
 
@@ -21,7 +29,17 @@ class _VentasState extends State<Ventas> {
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
   final _formKey3 = GlobalKey<FormState>();
+  final _formKey4 = GlobalKey<FormState>();
+  final _formKey5 = GlobalKey<FormState>();
+  bool pendiente;
   
+  @override
+  void initState() {
+    pendiente = Global.shared.pendiente;
+    super.initState();
+    
+  }
+
 
   
 
@@ -101,55 +119,134 @@ class _VentasState extends State<Ventas> {
     );
     
   }
+
+  TextFormField buildTextFormFieldFecha() {
+   
+    return TextFormField(
+      decoration: InputDecoration(
+        
+        labelText: fecha,
+        prefixText: now.toString(),
+        fillColor: Colors.white,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+        filled: true,
+      ),
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'No deje Campos Vacios';
+        }
+      },
+      onSaved: (value) => fecha = value,
+    );
+  }
   
 
 
   @override
   Widget build(BuildContext context) {
-
+    
      return Scaffold(
-      appBar: AppBar(
-        title: Text('Ventas'),
-      ),
+       backgroundColor: Colors.black,
+      appBar: _getCustomAppBar(),
       body: ListView(
+       
         padding: EdgeInsets.all(8),
         children: <Widget>[
+          SizedBox(height: 50.0),
           Form(
             key: _formKey,
             child: buildTextFormField(),
           ),
-          SizedBox(height: 8.0),
+          SizedBox(height: 20.0),
           Form(
             key: _formKey3,
             child: buildTextFormFieldProducto(),
+             
           ),
-          SizedBox(height: 8.0),
+          SizedBox(height: 20.0),
           Form(
             key: _formKey1,  
             child: buildTextFormField1(),
             
           ),
-          SizedBox(height: 8.0),
+          SizedBox(height: 20.0),
           Form(
             key: _formKey2,  
             child: buildTextFormFieldCosto(),
             
           ),
+          SizedBox(height: 20.0),
+          Form(
+            key: _formKey4,  
+            child: buildTextFormFieldFecha(),
+            
+          ),
+          SizedBox(height: 20.0),
+          Form(
+            key: _formKey5,  
+            
+            child:LiteRollingSwitch(
+    //initial value
+     
+    value: true,
+    textOn: 'Pagado',
+    textOff: 'Pendiente',
+    colorOn: Colors.greenAccent[700],
+    colorOff: Colors.redAccent[700],
+    iconOn: Icons.done,
+    iconOff: Icons.remove_circle_outline,
+    textSize: 16.0,
+    
+    onChanged: (bool isOn) {
+      
+            pendiente = isOn;
+             Global.shared.pendiente = isOn;
+             isOn = isOn;//literl si quito el setstate y lo vuelvo a poner sirve
+        print(isOn); 
+    },
+    
+    
+), 
+          ),
+          SizedBox(height: 40.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              RaisedButton(
-                 child: Text('Generar', style: TextStyle(color: Colors.white)),
-                color: Colors.green,
-                onPressed: (){
-
-                  Route route = MaterialPageRoute(builder: (bc) => VentasPendientes());
-                               Navigator.of(context).push(route);
-                               createData();
-                                                 
-                }                
+              
+              ButtonTheme(
+                
+                minWidth: 250.0,
+                height: 50.0,
+                child: RaisedButton(
+    color: Colors.orangeAccent, 
+    child: Row( 
+    mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisSize: MainAxisSize.max, 
+    children: <Widget>[
+        Padding(
+          padding: EdgeInsets.all(5.0),
+          child: Text(
+              "Generar",
+              style: TextStyle(
+                fontSize: 18, 
+                color: Colors.white, 
               ),
-             
+          ),
+        ),
+        Icon(
+          Icons.send, 
+          color: Colors.white,
+          size: 18, 
+        ),
+    ],
+    ),
+            onPressed: () {
+                 Route route = MaterialPageRoute(builder: (bc) => VentasPendientes());
+                               Navigator.of(context).push(route);
+                               createData(); 
+            },
+),
+              )
             ],
           ),
          
@@ -159,13 +256,48 @@ class _VentasState extends State<Ventas> {
   
   }
 
+  _getCustomAppBar(){
+  return PreferredSize(
+    preferredSize: Size.fromHeight(60),
+    child: Container(
+      alignment: Alignment.bottomCenter,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Colors.deepOrangeAccent,
+            Colors.yellowAccent,
+          ],
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+        IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
+          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => Login()),
+  );
+
+        }),
+        Text('Ventas', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        IconButton(icon: Icon(Icons.monetization_on), onPressed: (){}),
+      ],),
+    ),
+  );
+}
+
    void createData() async {
-    if (_formKey.currentState.validate() || _formKey1.currentState.validate() || _formKey2.currentState.validate() || _formKey3.currentState.validate()) {
+    if (_formKey.currentState.validate() || _formKey1.currentState.validate() || _formKey2.currentState.validate() || _formKey3.currentState.validate() || _formKey4.currentState.validate() || _formKey5.currentState.validate()) {
       _formKey.currentState.save();
       _formKey1.currentState.save();
       _formKey2.currentState.save();
       _formKey3.currentState.save();
-      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': '$costo', 'Producto': '$producto'});
+      _formKey4.currentState.save();
+      _formKey5.currentState.save();
+      String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': '$costo', 'Fecha': '$fecha','Producto': '$producto', 'Pendiente': '$pendiente'});
       setState(() => id = ref.documentID);
       print(ref.documentID);
     }
@@ -184,7 +316,12 @@ class _VentasState extends State<Ventas> {
     await db.collection('Ventas').document(doc.documentID).delete();
     setState(() => id = null);
   }
+  
 
 }
 
+class Global{
+  static final shared =Global();
+  bool pendiente = false;
+}
 
