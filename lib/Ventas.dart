@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'VentasPendientes.dart';
 import 'package:intl/intl.dart';
-import 'Login.dart';
+import 'Menu.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 
@@ -277,7 +277,7 @@ class _VentasState extends State<Ventas> {
         IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
           Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Login()),
+    MaterialPageRoute(builder: (context) => HomeScreen()),
   );
 
         }),

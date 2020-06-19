@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gumen/Animation/FadeAnimation.dart';
 import 'package:gumen/VentasPendientes.dart';
-import 'Ventas.dart';
+import 'Menu.dart';
 import 'dart:async';
 
 class Login extends StatelessWidget {
@@ -100,7 +100,7 @@ class Login extends StatelessWidget {
                              child: Text("Login", style: TextStyle(color: Colors.white),),
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => VentasPendientes());
+                               Route route = MaterialPageRoute(builder: (bc) => HomeScreen());
                                Navigator.of(context).push(route);
                               
                              },

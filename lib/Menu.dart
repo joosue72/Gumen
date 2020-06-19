@@ -1,207 +1,226 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
-import 'data.dart';
+import 'Ventas.dart';
+import 'VentasPendientes.dart';
 
-
-
-class Menu extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _MenuState createState() => _MenuState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _MenuState extends State<Menu> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    // to get size
+    var size = MediaQuery.of(context).size;
+    // style
+    var cardTextStyle = TextStyle(
+        fontFamily: "Montserrat Regular",
+        fontSize: 14,
+        
+        color: Color.fromRGBO(63, 63, 63, 1));
+
     return Scaffold(
-      backgroundColor: gradientEndColor,
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [gradientStartColor, gradientEndColor],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.3, 0.7])),
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'Explore',
-                      style: TextStyle(
-                        fontFamily: 'Avenir',
-                        fontSize: 44,
-                        color: const Color(0xffffffff),
-                        fontWeight: FontWeight.w900,
-                      ),
-                      textAlign: TextAlign.left,
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: <Widget>[
+          Container(
+            height: size.height * .3,
+            decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+
+             gradient: new LinearGradient(colors: [const Color(0xFFba8d13), const Color(0xFFffffff)],
+                begin: FractionalOffset.topLeft,
+                end: FractionalOffset.bottomRight,
+                stops: [0.0,1.0],
+                tileMode: TileMode.clamp
+                
+             
+             
+             )
+            ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 84,
+                    margin: EdgeInsets.only(bottom: 30),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 42,
+                          backgroundColor: Colors.yellow,
+                          backgroundImage: AssetImage(
+                              'assets/logogumen.png'),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                       
+                      ],
                     ),
-                    DropdownButton(
-                      items: [
-                        DropdownMenuItem(
-                          child: Text(
-                            'Solar System',
-                            style: TextStyle(
-                              fontFamily: 'Avenir',
-                              fontSize: 24,
-                              color: const Color(0x7cdbf1ff),
-                              fontWeight: FontWeight.w500,
+                  ),
+                  Expanded(
+                    child: GridView.count(
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      primary: false,
+                      crossAxisCount: 2,
+                      children: <Widget>[
+
+                        Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: RaisedButton(
+                              shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/3056354.png'), height: 100, alignment: Alignment.center, 
+                           ) , 
+
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => Ventas());
+                               Navigator.of(context).push(route);
+                              
+                             },
                             ),
-                            textAlign: TextAlign.left,
+
+                           
+                          
+                        ),
+
+                        Card(
+                            shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/3056428.png'), height: 100, alignment: Alignment.center, 
+                           ) , 
+
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => VentasPendientes());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
+
+                           
+                          
+                        ),
+                        
+
+                        Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: Column(
+                            
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SvgPicture.network(
+                                
+                                'https://image.flaticon.com/icons/svg/1904/1904527.svg',
+                                height: 128,
+                              ),
+                              Text(
+                                'Attendance Recap',
+                                style: cardTextStyle,
+                              )
+                            ],
+                          ),
+                        ),
+
+                        Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SvgPicture.network(
+                                'https://image.flaticon.com/icons/svg/1904/1904437.svg',
+                                height: 128,
+                              ),
+                              Text(
+                                'Study Result',
+                                style: cardTextStyle,
+                              )
+                            ],
+                          ),
+                        ),
+
+                        Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SvgPicture.network(
+                                'https://image.flaticon.com/icons/svg/1904/1904235.svg',
+                                height: 128,
+                              ),
+                              Text(
+                                'Course Booking',
+                                style: cardTextStyle,
+                              )
+                            ],
+                          ),
+                        ),
+
+                        Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SvgPicture.network(
+                                'https://image.flaticon.com/icons/svg/1904/1904221.svg',
+                                height: 128,
+                              ),
+                              Text(
+                                'Course Plan',
+                                style: cardTextStyle,
+                              )
+                            ],
                           ),
                         ),
                       ],
-                      onChanged: (value) {},
-                      icon: Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Image.asset('assets/drop_down_icon.png'),
-                      ),
-                      underline: SizedBox(),
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                height: 500,
-                padding: const EdgeInsets.only(left: 32),
-                child: Swiper(
-                  itemCount: planets.length,
-                  itemWidth: MediaQuery.of(context).size.width - 2 * 64,
-                  layout: SwiperLayout.STACK,
-                  pagination: SwiperPagination(
-                    builder:
-                        DotSwiperPaginationBuilder(activeSize: 20, space: 8),
                   ),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, a, b) => Menu(
-
-                            ),
-                          ),
-                        );
-                      },
-                      child: Stack(
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              SizedBox(height: 100),
-                              Card(
-                                elevation: 8,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(32),
-                                ),
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(32.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      SizedBox(height: 100),
-                                      Text(
-                                        planets[index].name,
-                                        style: TextStyle(
-                                          fontFamily: 'Avenir',
-                                          fontSize: 44,
-                                          color: const Color(0xff47455f),
-                                          fontWeight: FontWeight.w900,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      Text(
-                                        'Solar System',
-                                        style: TextStyle(
-                                          fontFamily: 'Avenir',
-                                          fontSize: 23,
-                                          color: primaryTextColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                      SizedBox(height: 32),
-                                      Row(
-                                        children: <Widget>[
-                                          Text(
-                                            'Know more',
-                                            style: TextStyle(
-                                              fontFamily: 'Avenir',
-                                              fontSize: 18,
-                                              color: secondaryTextColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            color: secondaryTextColor,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Hero(
-                            tag: planets[index].position,
-                            child: Image.asset(planets[index].iconImage),
-                          ),
-                          Positioned(
-                            right: 24,
-                            bottom: 60,
-                            child: Text(
-                              planets[index].position.toString(),
-                              style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 200,
-                                color: primaryTextColor.withOpacity(0.08),
-                                fontWeight: FontWeight.w900,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(36.0),
-          ),
-          color: navigationColor,
-        ),
-        padding: const EdgeInsets.all(24),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            IconButton(
-              icon: Image.asset('assets/menu_icon.png'),
-              onPressed: () {},
             ),
-            
-            IconButton(
-              icon: Image.asset('assets/profile_icon.png'),
-              onPressed: () {},
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
