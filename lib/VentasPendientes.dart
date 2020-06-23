@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/rendering.dart';
+import 'Menu.dart';
+import 'package:intl/intl.dart';
+
 
   String id;
   final db = Firestore.instance;
+  String nombre;
+  DateTime now = DateTime.now();
+  String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
 
 class VentasPendientes extends StatefulWidget {
  @override
@@ -14,39 +21,99 @@ class _VentasPendientesState extends State<VentasPendientes> {
 
   
   Card buildItem(DocumentSnapshot doc) {
+    nombre = doc.data['Nombre'];
     return Card(
+      
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    color: Colors.black,
       child: Padding(
+        
         padding: const EdgeInsets.all(8.0),
+        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          
           children: <Widget>[
+            
+           const ListTile(
+            title: Text('           Pendiente', style: TextStyle(color: Colors.white)),
+            leading: Icon(Icons.timer, size: 30, color: Colors.white),
+          ),
             Text(
+              
               'Nombre: ${doc.data['Nombre']}            ${doc.data['Producto']} ',
-              style: TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18, color: Colors.white),
             ),
             Text(
               'Cantidad: ${doc.data['Cantidad']} Kg',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             Text(
-              'Total: ${doc.data['Costo']} ',
-              style: TextStyle(fontSize: 16),
+              'Total: ${doc.data['Costo']} \$',
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
+            SizedBox(height: 10.0),
+            new Container(
+  margin: const EdgeInsets.all(15.0),
+  padding: const EdgeInsets.all(3.0),
+  decoration: BoxDecoration(
+    
+    border: Border.all(color: Colors.yellowAccent)
+  ),
+  child: Text('          ${doc.data['Fecha']}', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),),
+),
+            
             SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                FlatButton(
-                  onPressed: () => updateData(doc),
-                  child: Text('Pagar', style: TextStyle(color: Colors.white)),
-                  color: Colors.green,
-                ),
+                SizedBox.fromSize(
+  size: Size(100, 40), // button width and height
+  child: ClipRRect(
+    child: Material(
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5.0),
+    ),
+      color: Colors.green, // button color
+      child: InkWell(
+        splashColor: Colors.blue, // splash color
+        onTap:  () => updateData(doc), // button pressed
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.payment), // icon
+            Text("Pagar", style: TextStyle(color: Colors.white)), // text
+          ],
+        ),
+      ),
+    ),
+  ),
+),
                 SizedBox(width: 8),
-                FlatButton(
-                  onPressed: () => deleteData(doc),
-                  child: Text('Borrar', style: TextStyle(color: Colors.white),),
-                  color: Colors.red,
-                ),
+               SizedBox.fromSize(
+  size: Size(100, 40), // button width and height
+  child: ClipRRect(
+    child: Material(
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5.0),
+    ),
+      color: Colors.red, // button color
+      child: InkWell(
+        splashColor: Colors.green, // splash color
+        onTap:  () => deleteData(doc), // button pressed
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.delete), // icon
+            Text("Borrar", style: TextStyle(color: Colors.white)), // text
+          ],
+        ),
+      ),
+    ),
+  ),
+)
               ],
             )
           ],
@@ -60,15 +127,13 @@ class _VentasPendientesState extends State<VentasPendientes> {
   @override
   Widget build(BuildContext context) {
      return Scaffold(
-      appBar: AppBar(
-        title: Text('Ventas Pendientes'),
-      ),
+      appBar: _getCustomAppBar(),
         body: ListView(
         padding: EdgeInsets.all(8),
         children: <Widget>[
           
              StreamBuilder<QuerySnapshot>(
-            stream: db.collection('Ventas').snapshots(),
+            stream: db.collection('Ventas').where("pendiente", isEqualTo: 'false').snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(children: snapshot.data.documents.map((doc) => buildItem(doc)).toList());
@@ -85,8 +150,41 @@ class _VentasPendientesState extends State<VentasPendientes> {
      );
   }
   
+   _getCustomAppBar(){
+  return PreferredSize(
+    preferredSize: Size.fromHeight(60),
+    child: Container(
+      alignment: Alignment.bottomCenter,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Colors.deepOrangeAccent,
+            Colors.yellowAccent,
+          ],
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+        IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
+          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => HomeScreen()),
+  );
+
+        }),
+        Text('Ventas Pendientes', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        IconButton(icon: Icon(Icons.access_time), onPressed: (){}),
+      ],),
+    ),
+  );
+}
+
+
   void updateData(DocumentSnapshot doc) async {
-    await db.collection('Ventas').document(doc.documentID).updateData({'Nombre': 'Pagado'});
+    await db.collection('Ventas').document(doc.documentID).updateData({'Pendiente': 'false'});
   }
 
   void deleteData(DocumentSnapshot doc) async {

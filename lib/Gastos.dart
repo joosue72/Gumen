@@ -1,50 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'VentasPendientes.dart';
 import 'package:intl/intl.dart';
 import 'Menu.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 
-class Ventas extends StatefulWidget {
-  //bool pendiente = false; //lo acabo de poner lol
+class Gastos extends StatefulWidget {
+  Gastos({Key key}) : super(key: key);
+
   @override
-  _VentasState createState() => _VentasState();
+  _GastosState createState() => _GastosState();
 }
 
 String nombre;
 double cantidad;
-double costo;
-String producto;
+String descripcion;
 DateTime now = DateTime.now();
 String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
 
-
-
-class _VentasState extends State<Ventas> {
+class _GastosState extends State<Gastos> {
 
   String id;
   final db = Firestore.instance;
-  final _formKey = GlobalKey<FormState>();
-  final _formKey1 = GlobalKey<FormState>();
-  final _formKey2 = GlobalKey<FormState>();
-  final _formKey3 = GlobalKey<FormState>();
-  final _formKey4 = GlobalKey<FormState>();
-  final _formKey5 = GlobalKey<FormState>();
-  bool pendiente;
-  
-  @override
-  void initState() {
-    pendiente = Global.shared.pendiente;
-    super.initState();
-    
-  }
+  final _formKey7 = GlobalKey<FormState>();
+  final _formKey8 = GlobalKey<FormState>();
+  final _formKey9 = GlobalKey<FormState>();
+  final _formKey10 = GlobalKey<FormState>();
 
-
-  
-
-  TextFormField buildTextFormField() {
+   TextFormField buildTextFormFieldNombre() {
     return TextFormField(
+      
+    keyboardType: TextInputType.multiline,
+    minLines: 1,//Normal textInputField will be displayed
+    maxLines: 5,// when user presses enter it will adapt to it
+    
       decoration: InputDecoration(
         
         labelText: 'Nombre',
@@ -60,45 +48,6 @@ class _VentasState extends State<Ventas> {
       onSaved: (value) => nombre = value,
     );
   }
-  TextFormField buildTextFormFieldProducto() {
-    return TextFormField(
-      decoration: InputDecoration(
-        
-        labelText: 'Producto',
-        fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-        filled: true,
-      ),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'No deje Campos Vacios';
-        }
-      },
-      onSaved: (value) => producto = value,
-    );
-  }
-  TextFormField buildTextFormField1() {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      
-      decoration: InputDecoration(
-
-         labelText: 'Cantidad',
-         fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-        filled: true,
-      ),
-      
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'No deje Campos Vacios';
-        }
-      }, 
-      onSaved: (value) => cantidad = double.tryParse(value),
-    );
-    
-  }
-
   TextFormField buildTextFormFieldCosto() {
     return TextFormField(
       keyboardType: TextInputType.number,
@@ -115,12 +64,11 @@ class _VentasState extends State<Ventas> {
           return 'No deje Campos Vacios';
         }
       },
-      onSaved: (value) => costo = double.tryParse(value),
+      onSaved: (value) => cantidad = double.tryParse(value),
     );
     
   }
-
-  TextFormField buildTextFormFieldFecha() {
+   TextFormField buildTextFormFieldFecha() {
    
     return TextFormField(
       decoration: InputDecoration(
@@ -139,13 +87,32 @@ class _VentasState extends State<Ventas> {
       onSaved: (value) => fecha = value,
     );
   }
-  
-
+  TextFormField buildTextFormFieldDescripcion() {
+    return TextFormField(
+      
+    keyboardType: TextInputType.multiline,
+    minLines: 1,//Normal textInputField will be displayed
+    maxLines: 5,// when user presses enter it will adapt to it
+    
+      decoration: InputDecoration(
+        
+        labelText: 'Descripcion',
+        fillColor: Colors.white,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+        filled: true,
+      ),
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'No deje Campos Vacios';
+        }
+      },
+      onSaved: (value) => descripcion = value,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    
-     return Scaffold(
+    return Scaffold(
        backgroundColor: Colors.black,
       appBar: _getCustomAppBar(),
       body: ListView(
@@ -154,60 +121,26 @@ class _VentasState extends State<Ventas> {
         children: <Widget>[
           SizedBox(height: 50.0),
           Form(
-            key: _formKey,
-            child: buildTextFormField(),
+            key: _formKey7,
+            child: buildTextFormFieldNombre(),
           ),
           SizedBox(height: 20.0),
           Form(
-            key: _formKey3,
-            child: buildTextFormFieldProducto(),
-             
-          ),
-          SizedBox(height: 20.0),
-          Form(
-            key: _formKey1,  
-            child: buildTextFormField1(),
-            
-          ),
-          SizedBox(height: 20.0),
-          Form(
-            key: _formKey2,  
+            key: _formKey8,
             child: buildTextFormFieldCosto(),
-            
           ),
           SizedBox(height: 20.0),
           Form(
-            key: _formKey4,  
+            key: _formKey9,
+            child: buildTextFormFieldDescripcion(),
+          ),
+          SizedBox(height: 20.0),
+          Form(
+            key: _formKey10,
             child: buildTextFormFieldFecha(),
-            
           ),
-          SizedBox(height: 20.0),
-          Form(
-            key: _formKey5,  
-            
-            child:LiteRollingSwitch(
-    //initial value
-     
-    value: true,
-    textOn: 'Pagado',
-    textOff: 'Pendiente',
-    colorOn: Colors.greenAccent[700],
-    colorOff: Colors.redAccent[700],
-    iconOn: Icons.done,
-    iconOff: Icons.remove_circle_outline,
-    textSize: 16.0,
-    
-    onChanged: (bool isOn) {
-      
-            pendiente = isOn;
-             Global.shared.pendiente = isOn;
-             isOn = isOn;//literl si quito el setstate y lo vuelvo a poner sirve
-        print(isOn); 
-    },
-    
-    
-), 
-          ),
+          
+          
           SizedBox(height: 40.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -218,7 +151,7 @@ class _VentasState extends State<Ventas> {
                 minWidth: 250.0,
                 height: 50.0,
                 child: RaisedButton(
-    color: Colors.orangeAccent, 
+    color: Colors.blueAccent, 
     child: Row( 
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max, 
@@ -226,7 +159,7 @@ class _VentasState extends State<Ventas> {
         Padding(
           padding: EdgeInsets.all(5.0),
           child: Text(
-              "Generar",
+              "Generar Gasto",
               style: TextStyle(
                 fontSize: 18, 
                 color: Colors.white, 
@@ -241,7 +174,7 @@ class _VentasState extends State<Ventas> {
     ],
     ),
             onPressed: () {
-                 Route route = MaterialPageRoute(builder: (bc) => VentasPendientes());
+                 Route route = MaterialPageRoute(builder: (bc) => HomeScreen());
                                Navigator.of(context).push(route);
                                createData(); 
             },
@@ -253,9 +186,7 @@ class _VentasState extends State<Ventas> {
         ],
       ),
     );
-  
   }
-
   _getCustomAppBar(){
   return PreferredSize(
     preferredSize: Size.fromHeight(60),
@@ -266,7 +197,7 @@ class _VentasState extends State<Ventas> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            Colors.deepOrangeAccent,
+            Colors.blueAccent,
             Colors.yellowAccent,
           ],
         ),
@@ -281,47 +212,26 @@ class _VentasState extends State<Ventas> {
   );
 
         }),
-        Text('Ventas', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        Text('Gastos', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
         IconButton(icon: Icon(Icons.monetization_on), onPressed: (){}),
       ],),
     ),
   );
 }
 
-   void createData() async {
-    if (_formKey.currentState.validate() || _formKey1.currentState.validate() || _formKey2.currentState.validate() || _formKey3.currentState.validate() || _formKey4.currentState.validate() || _formKey5.currentState.validate()) {
-      _formKey.currentState.save();
-      _formKey1.currentState.save();
-      _formKey2.currentState.save();
-      _formKey3.currentState.save();
-      _formKey4.currentState.save();
-      _formKey5.currentState.save();
+void createData() async {
+    if (_formKey7.currentState.validate() || _formKey8.currentState.validate() || _formKey9.currentState.validate() || _formKey10.currentState.validate()) {
+      _formKey7.currentState.save();
+      _formKey8.currentState.save();
+      _formKey9.currentState.save();
+      _formKey10.currentState.save();
       String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': '$costo', 'Fecha': '$fecha','Producto': '$producto', 'pendiente': '$pendiente'});
+      DocumentReference ref = await db.collection('Gastos').add({'Nombre': '$nombre', 'Precio': '$cantidad', 'Descripcion': '$descripcion', 'Fecha': '$fecha'});
       setState(() => id = ref.documentID);
       print(ref.documentID);
     }
   }
 
-  void readData() async {
-    DocumentSnapshot snapshot = await db.collection('Ventas').document(id).get();
-    print(snapshot.data['Nombre']);
-  }
 
-  void updateData(DocumentSnapshot doc) async {
-    await db.collection('Ventas').document(doc.documentID).updateData({'Nombre': 'Pagado'});
-  }
-
-  void deleteData(DocumentSnapshot doc) async {
-    await db.collection('Ventas').document(doc.documentID).delete();
-    setState(() => id = null);
-  }
-  
 
 }
-
-class Global{
-  static final shared =Global();
-  bool pendiente = false;
-}
-
