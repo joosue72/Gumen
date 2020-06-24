@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
+import 'package:gumen/RegistroCliente.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
@@ -138,21 +140,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                          child: Column(
-                            
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SvgPicture.network(
-                                
-                                'https://image.flaticon.com/icons/svg/1904/1904527.svg',
-                                height: 128,
-                              ),
-                              Text(
-                                'Attendance Recap',
-                                style: cardTextStyle,
-                              )
-                            ],
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
                           ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/3056428.png'), height: 100, alignment: Alignment.center, 
+                           ) , 
+
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => Empleados());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
                         ),
 
                         Card(

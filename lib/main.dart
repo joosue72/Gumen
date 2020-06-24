@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gumen/RegistroCliente.dart';
 import 'dart:async';
 import 'Login.dart';
 
@@ -9,6 +10,9 @@ void main() {
   runApp(new MaterialApp(
   debugShowCheckedModeBanner: false,
   home: MyApp(),
+  routes: {
+    'Empleado' : (BuildContext context) => RegistroCliente()
+  },
 ));
 }
 
