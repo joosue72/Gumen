@@ -68,19 +68,26 @@ class _EmpleadosState extends State<Empleados> {
         empleadosProvider.borrarEmpleado(empleado.id);          //borrar Producto
       },
           child: Card(
+                        shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                elevation: 5,
+                margin: EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 (empleado.fotoUrl == null)
                 ? Image(image: AssetImage('images/no-image.png'))
-                : FadeInImage(image: NetworkImage(empleado.fotoUrl),
+                :  FadeInImage(image: NetworkImage(empleado.fotoUrl),
                               placeholder: AssetImage('images/original.gif'),
-                              height: 300.0,
+                              height: 200.0,
+                              
                               width: double.infinity,
                               fit: BoxFit.cover,
+                              
                 ),
                 ListTile(
-        title: Text('${empleado.nombrecompleto}-${empleado.sueldo}'),
-        subtitle: Text(empleado.id),
+        title: Text('Nombre: '+'${empleado.nombrecompleto}'),
+        subtitle: Text('Sueldo: '+'${empleado.sueldo}'),
          onTap: () => Navigator.pushNamed(context, 'Empleado', arguments: empleado ),
       ),
 

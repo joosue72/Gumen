@@ -5,7 +5,7 @@ import 'package:gumen/Ventas.dart';
 import 'package:gumen/models/empleado_model.dart';
 import 'package:gumen/providers/empleados_provider.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:gumen/utils/utils.dart' as utils;
 
 class RegistroCliente extends StatefulWidget {
   RegistroCliente({Key key}) : super(key: key);
@@ -95,18 +95,18 @@ final Client prodData = ModalRoute.of(context).settings.arguments;
        Widget _crearNomina(){
         return TextFormField(
           initialValue: cliente.sueldo.toString(),
-          textCapitalization: TextCapitalization.sentences,
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
           decoration: InputDecoration(
             labelText: 'Nomina'
           ),
            onSaved: (value) => cliente.sueldo = double.parse(value),
            validator: (value){
-                  if(value.length < 3)
+                  if(utils.isNumeric(value))
                   {
-                    return 'El campo no puede estar vacio';
+                    return null;
                   }
                   else{
-                    return null;
+                    return 'Solo Números';
                   }
               },
         );
