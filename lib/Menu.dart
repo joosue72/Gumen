@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
 import 'package:gumen/RegistroCliente.dart';
+import 'package:gumen/venta_grafica.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
@@ -165,19 +166,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SvgPicture.network(
-                                'https://image.flaticon.com/icons/svg/1904/1904437.svg',
-                                height: 128,
-                              ),
-                              Text(
-                                'Study Result',
-                                style: cardTextStyle,
-                              )
-                            ],
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
                           ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/3056428.png'), height: 100, alignment: Alignment.center, 
+                           ) , 
+
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => venta_grafica());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
                         ),
 
                         Card(
