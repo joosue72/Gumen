@@ -1,3 +1,5 @@
+
+import 'CrearProducto.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'VentasPendientes.dart';
@@ -18,6 +20,9 @@ double costo;
 String producto;
 DateTime now = DateTime.now();
 String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+String nombres;
+var selectedCurrency, selectedType;
+
 
 
 
@@ -46,7 +51,10 @@ class _VentasState extends State<Ventas> {
   TextFormField buildTextFormField() {
     return TextFormField(
       decoration: InputDecoration(
-        
+        icon: Icon(
+          Icons.person,
+          color: Colors.white,
+        ),
         labelText: 'Nombre',
         fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -63,7 +71,10 @@ class _VentasState extends State<Ventas> {
   TextFormField buildTextFormFieldProducto() {
     return TextFormField(
       decoration: InputDecoration(
-        
+        icon: Icon(
+          Icons.storage,
+          color: Colors.white,
+        ),
         labelText: 'Producto',
         fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -82,7 +93,10 @@ class _VentasState extends State<Ventas> {
       keyboardType: TextInputType.number,
       
       decoration: InputDecoration(
-
+        icon: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
          labelText: 'Cantidad',
          fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -104,7 +118,10 @@ class _VentasState extends State<Ventas> {
       keyboardType: TextInputType.number,
 
       decoration: InputDecoration(
-        
+        icon: Icon(
+          Icons.monetization_on,
+          color: Colors.white,
+        ),
         labelText: 'Costo',
         fillColor: Colors.white,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -119,12 +136,17 @@ class _VentasState extends State<Ventas> {
     );
     
   }
+  
+ 
 
   TextFormField buildTextFormFieldFecha() {
    
     return TextFormField(
       decoration: InputDecoration(
-        
+        icon: Icon(
+          Icons.date_range,
+          color: Colors.white,
+        ),
         labelText: fecha,
         prefixText: now.toString(),
         fillColor: Colors.white,
@@ -160,7 +182,95 @@ class _VentasState extends State<Ventas> {
           SizedBox(height: 20.0),
           Form(
             key: _formKey3,
-            child: buildTextFormFieldProducto(),
+            child:  ListView(
+              scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.storage, color: Colors.white),
+                    SizedBox(width: 70.0,),
+                     StreamBuilder<QuerySnapshot>(
+                       
+                  stream: db.collection('VentasProducto').snapshots(),
+                  
+                  builder: (context, snapshot) {
+                    
+                    if (!snapshot.hasData)
+
+                      const Text("Loading.....");
+                    else {
+                      List<DropdownMenuItem> currencyItems = [];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        currencyItems.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              
+                              snap.reference.documentID,
+                              style: TextStyle(color: Color.fromARGB(255,98,97,97)),
+                            ),
+                            value: "${snap.documentID}",
+                          ),
+                        );
+                      }return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          
+                          
+                          DropdownButton(
+                            
+                            items: currencyItems,
+                            onChanged: (currencyValue) {
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.black,
+                                content: Text(
+                                  'Producto: $currencyValue',
+                                  style: TextStyle(color: Colors.white),
+                                  
+                                ),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                              setState(() {
+                                selectedCurrency = currencyValue;
+                              });
+                            },
+                            value: selectedCurrency,
+                            isExpanded: false,
+                            hint: new Text(
+                              "Seleccione Producto",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  }),
+                  SizedBox(width: 20.0,),
+                   Container(
+        height: 40.0,
+        width: 40.0,
+        child: FittedBox(
+         child: FloatingActionButton(
+      child: Icon( Icons.add ),
+      backgroundColor: Colors.orange,
+      
+      onPressed: (){
+                               
+         Route route = MaterialPageRoute(builder: (bc) => CrearProducto());
+         Navigator.of(context).push(route);
+         },
+    ),
+        ),
+                  ),
+                  SizedBox(width: 10.0,),
+                  ],
+                  
+                ),
+                
+              ],
+            ),
              
           ),
           SizedBox(height: 20.0),
@@ -201,7 +311,7 @@ class _VentasState extends State<Ventas> {
       
             pendiente = isOn;
              Global.shared.pendiente = isOn;
-             isOn = isOn;//literl si quito el setstate y lo vuelvo a poner sirve
+             isOn = isOn;
         print(isOn); 
     },
     
@@ -209,6 +319,7 @@ class _VentasState extends State<Ventas> {
 ), 
           ),
           SizedBox(height: 40.0),
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -218,7 +329,7 @@ class _VentasState extends State<Ventas> {
                 minWidth: 250.0,
                 height: 50.0,
                 child: RaisedButton(
-    color: Colors.orangeAccent, 
+    color: Colors.orange, 
     child: Row( 
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max, 
@@ -244,13 +355,17 @@ class _VentasState extends State<Ventas> {
                  Route route = MaterialPageRoute(builder: (bc) => VentasPendientes());
                                Navigator.of(context).push(route);
                                createData(); 
+                                               
             },
 ),
-              )
+              ),
+              
             ],
+            
           ),
-         
+        
         ],
+        
       ),
     );
   
@@ -297,7 +412,7 @@ class _VentasState extends State<Ventas> {
       _formKey4.currentState.save();
       _formKey5.currentState.save();
       String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': '$costo', 'Fecha': '$fecha','Producto': '$producto', 'pendiente': '$pendiente'});
+      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': '$costo', 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente'});
       setState(() => id = ref.documentID);
       print(ref.documentID);
     }

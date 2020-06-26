@@ -94,10 +94,11 @@ final Client prodData = ModalRoute.of(context).settings.arguments;
 
        Widget _crearNomina(){
         return TextFormField(
-          initialValue: cliente.sueldo.toString(),
+          
           keyboardType: TextInputType.numberWithOptions(decimal: true),
           decoration: InputDecoration(
-            labelText: 'Nomina'
+            labelText: 'Nomina',
+            hintText: '0.0'
           ),
            onSaved: (value) => cliente.sueldo = double.parse(value),
            validator: (value){
