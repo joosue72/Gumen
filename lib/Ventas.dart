@@ -29,8 +29,9 @@ var selectedCurrency, selectedType;
 
 class _VentasState extends State<Ventas> {
 
-  String id;
+  
   final db = Firestore.instance;
+  String id;
   final _formKey = GlobalKey<FormState>();
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
@@ -191,7 +192,7 @@ class _VentasState extends State<Ventas> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(Icons.storage, color: Colors.white),
-                    SizedBox(width: 70.0,),
+                    SizedBox(width: 55.0,),
                      StreamBuilder<QuerySnapshot>(
                        
                   stream: db.collection('VentasProducto').snapshots(),
@@ -260,6 +261,7 @@ class _VentasState extends State<Ventas> {
       onPressed: (){
                                
          Route route = MaterialPageRoute(builder: (bc) => CrearProducto());
+         
          Navigator.of(context).push(route);
          },
     ),
@@ -433,7 +435,7 @@ class _VentasState extends State<Ventas> {
         case 'May':
             numerofecha = 5;
         break;
-        case 'Jan':
+        case 'Jun':
             numerofecha = 6;
         break;
         case 'Jul':

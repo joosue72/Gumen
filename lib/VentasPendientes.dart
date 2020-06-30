@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gumen/Gastos.dart';
+import 'package:gumen/Ventas.dart';
 import 'Menu.dart';
 import 'package:intl/intl.dart';
 
@@ -10,6 +12,8 @@ import 'package:intl/intl.dart';
   String nombre;
   DateTime now = DateTime.now();
   String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+  String tcosto;
+
 
 class VentasPendientes extends StatefulWidget {
  @override
@@ -18,6 +22,30 @@ class VentasPendientes extends StatefulWidget {
 }
 
 class _VentasPendientesState extends State<VentasPendientes> {
+
+TextEditingController _textFieldController = TextEditingController();
+  _displayDialog(BuildContext context, DocumentSnapshot doc) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Editar Total'),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(suffixText:'${doc.data['Costo']}'),
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('Guardar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  updateCantidad(doc);
+                },
+              )
+            ],
+          );
+        });
+  }
 
   
   Card buildItem(DocumentSnapshot doc) {
@@ -92,6 +120,31 @@ class _VentasPendientesState extends State<VentasPendientes> {
   ),
 ),
                 SizedBox(width: 8),
+               SizedBox.fromSize(
+  size: Size(100, 40), // button width and height
+  child: ClipRRect(
+    child: Material(
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(5.0),
+    ),
+      color: Colors.blue, // button color
+      child: InkWell(
+        splashColor: Colors.green, // splash color
+        onTap:  () {
+          _displayDialog(context, doc);
+        }, // button pressed
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.edit), // icon
+            Text("Editar", style: TextStyle(color: Colors.white)), // text
+          ],
+        ),
+      ),
+    ),
+  ),
+),
+SizedBox(width: 8),
                SizedBox.fromSize(
   size: Size(100, 40), // button width and height
   child: ClipRRect(
@@ -187,8 +240,18 @@ class _VentasPendientesState extends State<VentasPendientes> {
     await db.collection('Ventas').document(doc.documentID).updateData({'Pendiente': 'false'});
   }
 
+  void updateCantidad(DocumentSnapshot doc) async {
+    await db.collection('Ventas').document(doc.documentID).updateData({'Costo': costo});
+  }
+
   void deleteData(DocumentSnapshot doc) async {
     await db.collection('Ventas').document(doc.documentID).delete();
     setState(() => id = null);
   }
+
+  
 }
+
+
+
+
