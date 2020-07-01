@@ -8,10 +8,31 @@ class VentaWidget extends StatefulWidget {
 
  final List<DocumentSnapshot> documents;
  final double total;
+ final List<double> perDay;
+ final Map<String,double>categories;
 
    VentaWidget({Key key, this.documents}) : 
     total = documents.map((doc) => doc['Costo'])
             .fold(0.0, (a, b) => a + b),
+     
+     
+     perDay = List.generate(30, (int index){
+       return documents.where((doc) => doc['Dia'] ==(index + 1))
+        .map((doc) => doc['Costo'])
+            .fold(0.0, (a, b) => a + b);
+     }),       
+
+      categories = documents.fold({}, (Map<String, double> map,document){
+
+        if(!map.containsKey(document['Producto'])){
+          map[document['Producto']] = 0.0;
+        }
+
+        map[document['Producto']] += document['Costo'];
+        return map;
+
+      }),
+
     super(key: key);
 
   @override
@@ -61,7 +82,8 @@ class _VentaWidgetState extends State<VentaWidget> {
   Widget _graph() {
     return Container(
       height: 250.0,
-      child: GraphWidget(),
+      child: GraphWidget(
+        data: widget.perDay,),
     );
   }
   
@@ -104,8 +126,13 @@ class _VentaWidgetState extends State<VentaWidget> {
   Widget _list() {
     return Expanded(
           child: ListView.separated(
-            itemCount: 15,
-            itemBuilder: (BuildContext context, int index) => _item(FontAwesomeIcons.shoppingCart, "Shopping",14, 145.12), 
+            itemCount: widget.categories.keys.length,
+            itemBuilder: (BuildContext context, int index) { 
+              var key = widget.categories.keys.elementAt(index);
+              var data = widget.categories[key];
+              
+              return _item(FontAwesomeIcons.shoppingCart,key, 100*data ~/ widget.total,data);
+              }, 
             separatorBuilder: (BuildContext context, int index){
               return Container(
                 color: Colors.blueAccent.withOpacity(0.15),

@@ -420,7 +420,9 @@ class _VentasState extends State<Ventas> {
       _formKey5.currentState.save();
       String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
       String mes = DateFormat('MMM').format(now);
+      String dia = DateFormat('d').format(now);
       int numerofecha;
+
 
       switch(mes)
       {
@@ -461,7 +463,7 @@ class _VentasState extends State<Ventas> {
             numerofecha = 12;
         break;
       }
-      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': costo, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente', 'Mes': numerofecha});
+      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': costo, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente', 'Mes': numerofecha,'Dia': int.parse(dia)});
       setState(() => id = ref.documentID);
       print(ref.documentID);
     }
