@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/3056354.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/rebaja.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/3056428.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/reloj.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/3056428.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/empl.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
@@ -158,6 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                Navigator.of(context).push(route);
                               
                              },
+                             
                             ),
                             
                             
@@ -175,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/3056428.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/grafico.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
