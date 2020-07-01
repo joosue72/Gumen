@@ -168,6 +168,7 @@ class _VentasState extends State<Ventas> {
   Widget build(BuildContext context) {
     
      return Scaffold(
+        resizeToAvoidBottomInset: false,
        backgroundColor: Colors.black,
       appBar: _getCustomAppBar(),
       body: ListView(
@@ -247,14 +248,17 @@ class _VentasState extends State<Ventas> {
                       );
                     }
                   }),
-                  SizedBox(width: 20.0,),
+                  
+                  SizedBox(width: 10.0,),
                    Container(
         height: 40.0,
         width: 40.0,
         child: FittedBox(
+        
          child: FloatingActionButton(
-      child: Icon( Icons.add ),
-      backgroundColor: Colors.orange,
+           
+            child: Icon( Icons.add ),
+            backgroundColor: Colors.orange,
       
       onPressed: (){
                                
