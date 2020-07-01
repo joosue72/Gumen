@@ -20,6 +20,7 @@ double costo;
 String producto;
 DateTime now = DateTime.now();
 String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
+String mes = DateFormat('MMM').format(now);
 String nombres;
 var selectedCurrency, selectedType;
 
@@ -28,8 +29,9 @@ var selectedCurrency, selectedType;
 
 class _VentasState extends State<Ventas> {
 
-  String id;
+  
   final db = Firestore.instance;
+  String id;
   final _formKey = GlobalKey<FormState>();
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
@@ -191,7 +193,7 @@ class _VentasState extends State<Ventas> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(Icons.storage, color: Colors.white),
-                    SizedBox(width: 70.0,),
+                    SizedBox(width: 55.0,),
                      StreamBuilder<QuerySnapshot>(
                        
                   stream: db.collection('VentasProducto').snapshots(),
@@ -263,6 +265,7 @@ class _VentasState extends State<Ventas> {
       onPressed: (){
                                
          Route route = MaterialPageRoute(builder: (bc) => CrearProducto());
+         
          Navigator.of(context).push(route);
          },
     ),
@@ -416,7 +419,49 @@ class _VentasState extends State<Ventas> {
       _formKey4.currentState.save();
       _formKey5.currentState.save();
       String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': '$costo', 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente'});
+      String mes = DateFormat('MMM').format(now);
+      int numerofecha;
+
+      switch(mes)
+      {
+        case 'Jan':
+            numerofecha = 1;
+        break;
+        case 'Feb':
+            numerofecha = 2;
+        break;
+        case 'Mar':
+            numerofecha = 3;
+        break;
+        case 'Apr':
+            numerofecha = 4;
+        break;
+        case 'May':
+            numerofecha = 5;
+        break;
+        case 'Jun':
+            numerofecha = 6;
+        break;
+        case 'Jul':
+            numerofecha = 7;
+        break;
+        case 'Aug':
+            numerofecha = 8;
+        break;
+        case 'Sep':
+            numerofecha = 9;
+        break;
+        case 'Oct':
+            numerofecha = 10;
+        break;
+        case 'Nov':
+            numerofecha = 11;
+        break;
+        case 'Dec':
+            numerofecha = 12;
+        break;
+      }
+      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': '$costo', 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente', 'Mes': '$numerofecha'});
       setState(() => id = ref.documentID);
       print(ref.documentID);
     }
