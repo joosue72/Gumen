@@ -90,6 +90,7 @@ class _VentasState extends State<Ventas> {
       onSaved: (value) => producto = value,
     );
   }
+
   TextFormField buildTextFormField1() {
     return TextFormField(
       keyboardType: TextInputType.number,
@@ -463,9 +464,21 @@ class _VentasState extends State<Ventas> {
             numerofecha = 12;
         break;
       }
-      DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': costo, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente', 'Mes': numerofecha,'Dia': int.parse(dia)});
+      if(pendiente == false)
+      {
+        DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad','Pendiente': costo, 'Costo': costo = 0, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente', 'Mes': numerofecha,'Dia': int.parse(dia)});
       setState(() => id = ref.documentID);
-      print(ref.documentID);
+      }
+
+      else {
+        DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': costo, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente', 'Mes': numerofecha,'Dia': int.parse(dia)});
+      setState(() => id = ref.documentID);
+
+      }
+
+      
+
+  
     }
   }
 

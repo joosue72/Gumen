@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
   String tcosto;
   double obtcosto;
   double total;
+  double total2;
 class VentasPendientes extends StatefulWidget {
  @override
   _VentasPendientesState createState() => _VentasPendientesState();
@@ -36,7 +37,7 @@ TextEditingController _textFieldController = TextEditingController();
             content: TextField(
               keyboardType: TextInputType.number,
               controller: _textFieldController,
-              decoration: InputDecoration(suffixText:'${doc.data['Costo']}'), 
+              decoration: InputDecoration(suffixText:'${doc.data['Pendiente']}'), 
             ),
             actions: <Widget>[
               new FlatButton(
@@ -59,7 +60,7 @@ TextEditingController _textFieldController = TextEditingController();
   Card buildItem(DocumentSnapshot doc) {
     TextEditingController _textcantidad = TextEditingController();
     nombre = doc.data['Nombre'];
-    total = doc.data['Costo'];
+    
     return Card(
       
       shape: RoundedRectangleBorder(
@@ -89,7 +90,7 @@ TextEditingController _textFieldController = TextEditingController();
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             Text(
-              'Total: ${doc.data['Costo']} \$',
+              'Saldo: ${doc.data['Pendiente']} \$',
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             SizedBox(height: 10.0),
@@ -251,8 +252,14 @@ SizedBox(width: 8),
   }
 
   void updateCantidad(DocumentSnapshot doc) async {
+    total = doc.data['Pendiente'];
+    total2 = doc.data['Costo'];
+    
     total -= obtcosto;
-    await db.collection('Ventas').document(doc.documentID).updateData({'Costo': total});
+    total2 += obtcosto;
+    await db.collection('Ventas').document(doc.documentID).updateData({'Pendiente': total, 'Costo':total2});
+  
+    
   }
 
   void deleteData(DocumentSnapshot doc) async {
