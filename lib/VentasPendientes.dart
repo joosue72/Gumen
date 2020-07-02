@@ -37,7 +37,7 @@ TextEditingController _textFieldController = TextEditingController();
             content: TextField(
               keyboardType: TextInputType.number,
               controller: _textFieldController,
-              decoration: InputDecoration(suffixText:'${doc.data['Pendiente']}'), 
+              decoration: InputDecoration(suffixText:'${doc.data['Saldo']}'), 
             ),
             actions: <Widget>[
               new FlatButton(
@@ -90,7 +90,7 @@ TextEditingController _textFieldController = TextEditingController();
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             Text(
-              'Saldo: ${doc.data['Pendiente']} \$',
+              'Saldo: ${doc.data['Saldo']} \$',
               style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             SizedBox(height: 10.0),
@@ -166,7 +166,7 @@ SizedBox(width: 8),
       color: Colors.red, // button color
       child: InkWell(
         splashColor: Colors.green, // splash color
-        onTap:  () => deleteData(doc), // button pressed
+        onTap:  () => showAlertDialog(context, doc), // button pressed
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -197,7 +197,7 @@ SizedBox(width: 8),
         children: <Widget>[
           
              StreamBuilder<QuerySnapshot>(
-            stream: db.collection('Ventas').where("pendiente", isEqualTo: 'false').snapshots(),
+            stream: db.collection('Ventas').where("Pendiente", isEqualTo: false).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(children: snapshot.data.documents.map((doc) => buildItem(doc)).toList());
@@ -248,16 +248,16 @@ SizedBox(width: 8),
 
 
   void updateData(DocumentSnapshot doc) async {
-    await db.collection('Ventas').document(doc.documentID).updateData({'Pendiente': 'false'});
+    await db.collection('Ventas').document(doc.documentID).updateData({'Pendiente': true});
   }
 
   void updateCantidad(DocumentSnapshot doc) async {
-    total = doc.data['Pendiente'];
+    total = doc.data['Saldo'];
     total2 = doc.data['Costo'];
     
     total -= obtcosto;
     total2 += obtcosto;
-    await db.collection('Ventas').document(doc.documentID).updateData({'Pendiente': total, 'Costo':total2});
+    await db.collection('Ventas').document(doc.documentID).updateData({'Saldo': total, 'Costo':total2});
   
     
   }
@@ -266,6 +266,43 @@ SizedBox(width: 8),
     await db.collection('Ventas').document(doc.documentID).delete();
     setState(() => id = null);
   }
+
+showAlertDialog(BuildContext context, DocumentSnapshot doc) {
+
+  // set up the buttons
+  Widget cancelButton = FlatButton(
+    child: Text("Cancelar"),
+    onPressed:  () {
+      Navigator.of(context).pop();
+    },
+  );
+  Widget continueButton = FlatButton(
+    child: Text("Borrar"),
+    onPressed:  () {
+      deleteData(doc);
+      Navigator.of(context).pop();
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Alerta!"),
+    content: Text("¿Estás seguro de que quieres eliminar esta venta?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 
   
 }

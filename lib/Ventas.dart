@@ -1,4 +1,3 @@
-
 import 'CrearProducto.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -466,12 +465,12 @@ class _VentasState extends State<Ventas> {
       }
       if(pendiente == false)
       {
-        DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad','Pendiente': costo, 'Costo': costo = 0, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente', 'Mes': numerofecha,'Dia': int.parse(dia)});
+        DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad','Saldo': costo, 'Costo': costo = 0, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Mes': numerofecha,'Dia': int.parse(dia)});
       setState(() => id = ref.documentID);
       }
 
       else {
-        DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': costo, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'pendiente': '$pendiente', 'Mes': numerofecha,'Dia': int.parse(dia)});
+        DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': costo, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Mes': numerofecha,'Dia': int.parse(dia)});
       setState(() => id = ref.documentID);
 
       }
@@ -503,4 +502,3 @@ class Global{
   static final shared =Global();
   bool pendiente = false;
 }
-
