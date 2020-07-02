@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gumen/RegistroCliente.dart';
 import 'dart:async';
 import 'Login.dart';
+import 'details_page.dart';
 
 
 
@@ -10,8 +11,15 @@ void main() {
   runApp(new MaterialApp(
   debugShowCheckedModeBanner: false,
   home: MyApp(),
+  onGenerateRoute: (settings) {
+         if(settings.name == '/details'){
+           DetailsPage params = settings.arguments;
+           return MaterialPageRoute(builder: (BuildContext context){
+             return DetailsParams(params: params,);});
+         }
+        },
   routes: {
-    'Empleado' : (BuildContext context) => RegistroCliente()
+    'Empleado' : (BuildContext context) => RegistroCliente(),
   },
 ));
 }

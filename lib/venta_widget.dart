@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gumen/details_page.dart';
 
 import 'Grafica_Pie.dart';
 import 'graph_widget.dart';
@@ -19,8 +20,9 @@ class VentaWidget extends StatefulWidget {
  final List<double> perDay;
  final Map<String,double>categories;
  final GraphType graphType;
+ final int month;
 
-   VentaWidget({Key key, this.graphType,this.documents}) : 
+   VentaWidget({Key key,@required this.month, this.graphType,this.documents}) : 
     total = documents.map((doc) => doc['Costo'])
             .fold(0.0, (a, b) => a + b),
      
@@ -111,6 +113,11 @@ class _VentaWidgetState extends State<VentaWidget> {
   
   Widget _item(IconData icon, String nombre, int percent,double value){
     return ListTile(
+      onTap: (){
+       Navigator.of(context).pushNamed("/details",
+            arguments: DetailsPage(nombre, widget.month));
+      },
+
       leading: Icon(icon, size: 32.0,),
       title: Text(nombre,
         style: TextStyle(

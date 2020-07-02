@@ -96,6 +96,7 @@ class _venta_graficaState extends State<venta_grafica> {
                   
                   documents: data.data.documents,
                   graphType: currentType,
+                  month: currentPage,
                 );
               }
 
