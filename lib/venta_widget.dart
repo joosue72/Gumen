@@ -2,7 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'Grafica_Pie.dart';
 import 'graph_widget.dart';
+
+enum GraphType {
+  LINES, PIE,
+}
+
+
+
 
 class VentaWidget extends StatefulWidget {
 
@@ -10,8 +18,9 @@ class VentaWidget extends StatefulWidget {
  final double total;
  final List<double> perDay;
  final Map<String,double>categories;
+ final GraphType graphType;
 
-   VentaWidget({Key key, this.documents}) : 
+   VentaWidget({Key key, this.graphType,this.documents}) : 
     total = documents.map((doc) => doc['Costo'])
             .fold(0.0, (a, b) => a + b),
      
@@ -80,11 +89,24 @@ class _VentaWidgetState extends State<VentaWidget> {
   
   
   Widget _graph() {
-    return Container(
-      height: 250.0,
-      child: GraphWidget(
-        data: widget.perDay,),
-    );
+    if (widget.graphType == GraphType.LINES) {
+      return Container(
+        height: 250.0,
+        child: GraphWidget(
+          data: widget.perDay,
+        ),
+      );
+    } 
+    
+      if (widget.graphType == GraphType.PIE) {
+      var perCategory = widget.categories.keys.map((name) => widget.categories[name] / widget.total).toList();
+      return Container(
+        height: 250.0,
+        child: PieGraphWidget(
+          data: perCategory,
+        ),
+      );
+    }
   }
   
   Widget _item(IconData icon, String nombre, int percent,double value){

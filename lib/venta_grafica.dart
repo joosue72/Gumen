@@ -14,8 +14,9 @@ class venta_grafica extends StatefulWidget {
 class _venta_graficaState extends State<venta_grafica> {
 
    PageController _controller;
-  int currentPage = 9;
+  int currentPage = DateTime.now().month - 1;
   Stream<QuerySnapshot> _query;
+  GraphType currentType = GraphType.LINES;
 
 
   @override
@@ -33,13 +34,13 @@ class _venta_graficaState extends State<venta_grafica> {
     );
   }
 
-  Widget _bottomAction(IconData icon) {
+  Widget _bottomAction(IconData icon, Function callback) {
     return InkWell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Icon(icon),
       ),
-      onTap: () {},
+      onTap: callback,
     );
   }
 
@@ -47,20 +48,32 @@ class _venta_graficaState extends State<venta_grafica> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
-        notchMargin: 8.0,
-        shape: CircularNotchedRectangle(),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _bottomAction(FontAwesomeIcons.history),
-            _bottomAction(FontAwesomeIcons.chartPie),
-            SizedBox(width: 48.0),
-            _bottomAction(FontAwesomeIcons.wallet),
-            _bottomAction(Icons.settings),
-          ],
+          notchMargin: 8.0,
+          shape: CircularNotchedRectangle(),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              _bottomAction(FontAwesomeIcons.chartLine, () {
+                  print("asd");
+                setState(() {
+                  
+                  currentType = GraphType.LINES;
+                });
+              }),
+              _bottomAction(FontAwesomeIcons.chartPie, () {
+                setState(() {
+                  currentType = GraphType.PIE;
+                });
+              }),
+              SizedBox(width: 48.0),
+              _bottomAction(FontAwesomeIcons.wallet, () {}),
+              _bottomAction(FontAwesomeIcons.signOutAlt, () {
+              
+              }),
+            ],
+          ),
         ),
-      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -80,7 +93,9 @@ class _venta_graficaState extends State<venta_grafica> {
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> data) {
               if (data.hasData) {
                 return VentaWidget(
+                  
                   documents: data.data.documents,
+                  graphType: currentType,
                 );
               }
 
