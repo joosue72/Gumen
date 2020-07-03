@@ -27,6 +27,7 @@ void main() {
 int n1;
 
 class MyApp  extends StatefulWidget {
+  
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -38,11 +39,13 @@ class _MyAppState extends State<MyApp> {
 
     super.initState();
     Future.delayed(
+      
     Duration(seconds: 3),
     (){
       Navigator.push(
         context,
         MaterialPageRoute(
+          
           builder: (context) => Login(),
         ),
       );
@@ -56,10 +59,15 @@ class _MyAppState extends State<MyApp> {
 @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FlutterLogo(
-          size: 300,
-        ),
+      
+      body: Container(
+       decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/12.gif"),
+            fit: BoxFit.cover,
+          ),
+        ),  
+      
       ),
         
     );
