@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/rebaja.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/carrito.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/reloj.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/pendientes.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/empl.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/nomina1.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
@@ -176,9 +176,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/grafico.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/stat.png'), height: 100, alignment: Alignment.center, 
                            ) , 
-
+                            
                             
                              onPressed: (){
                                
@@ -194,19 +194,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SvgPicture.network(
-                                'https://image.flaticon.com/icons/svg/1904/1904235.svg',
-                                height: 128,
-                              ),
-                              Text(
-                                'Course Booking',
-                                style: cardTextStyle,
-                              )
-                            ],
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
                           ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/gasto.png'), height: 100, alignment: Alignment.center, 
+                           ) , 
+                            
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => Gastos());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
+                           
                         ),
 
                         Card(
