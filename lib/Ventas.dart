@@ -21,8 +21,10 @@ DateTime now = DateTime.now();
 String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
 String mes = DateFormat('MMM').format(now);
 String nombres;
+double cantidadInventario;
+String productoInventario;
 var selectedCurrency, selectedType;
-
+int cont;
 
 
 
@@ -231,7 +233,6 @@ class _VentasState extends State<Ventas> {
                                 content: Text(
                                   'Producto: $currencyValue',
                                   style: TextStyle(color: Colors.white),
-                                  
                                 ),
                               );
                               Scaffold.of(context).showSnackBar(snackBar);
@@ -361,8 +362,9 @@ class _VentasState extends State<Ventas> {
             onPressed: () {
                  Route route = MaterialPageRoute(builder: (bc) => VentasPendientes());
                                Navigator.of(context).push(route);
-                               createData(); 
-                                               
+                               createData();  
+                               actualizarInventario();
+                                          
             },
 ),
               ),
@@ -372,11 +374,12 @@ class _VentasState extends State<Ventas> {
           ),
         
         ],
-        
+         
       ),
     );
   
-  }
+  
+  }//build
 
   _getCustomAppBar(){
   return PreferredSize(
@@ -409,6 +412,9 @@ class _VentasState extends State<Ventas> {
     ),
   );
 }
+
+
+
 
    void createData() async {
     if (_formKey.currentState.validate() || _formKey1.currentState.validate() || _formKey2.currentState.validate() || _formKey3.currentState.validate() || _formKey4.currentState.validate() || _formKey5.currentState.validate()) {
@@ -467,12 +473,16 @@ class _VentasState extends State<Ventas> {
       {
         DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad','Saldo': costo, 'Costo': costo = 0, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Mes': numerofecha,'Dia': int.parse(dia)});
       setState(() => id = ref.documentID);
+
+
       }
 
       else {
         DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': costo, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Mes': numerofecha,'Dia': int.parse(dia)});
       setState(() => id = ref.documentID);
 
+        
+        
       }
 
       
@@ -486,8 +496,42 @@ class _VentasState extends State<Ventas> {
     print(snapshot.data['Nombre']);
   }
 
+   void actualizarInventario() async
+ {
+   cont = 0;
+   db
+      .collection("VentasProducto")
+      .where("Producto", isEqualTo: selectedCurrency)
+      .snapshots()
+      .listen((result) {
+    result.documents.forEach((result) {
+      productoInventario = result.data['Cantidad'].toString();
+      cantidadInventario = double.parse(productoInventario);
+   if(pendiente==true)
+   {
+     cantidadInventario -= cantidad;
+     cont++;
+     if(cont == 1)
+     {
+         db.collection('VentasProducto').document('$selectedCurrency').updateData({'Cantidad': cantidadInventario});
+     }
+   }
+   else
+   {
+    cantidadInventario -= cantidad;
+     cont++;
+     if(cont == 1)
+     {
+         db.collection('VentasProducto').document('$selectedCurrency').updateData({'Cantidad': cantidadInventario});
+     }
+   }
+    });
+  });
+  
+ }
+
   void updateData(DocumentSnapshot doc) async {
-    await db.collection('Ventas').document(doc.documentID).updateData({'Nombre': 'Pagado'});
+    await db.collection('VentasProducto').document(doc.documentID).updateData({'Cantidad': cantidadInventario});
   }
 
   void deleteData(DocumentSnapshot doc) async {
