@@ -479,10 +479,7 @@ class _VentasState extends State<Ventas> {
 
       else {
         DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': '$cantidad', 'Costo': costo, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Mes': numerofecha,'Dia': int.parse(dia)});
-      setState(() => id = ref.documentID);
-
-        
-        
+      setState(() => id = ref.documentID); 
       }
 
       
