@@ -10,6 +10,7 @@ import 'package:gumen/venta_grafica.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
+import 'Proveedores.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -92,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/carrito.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/carrito1.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             

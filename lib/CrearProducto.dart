@@ -5,8 +5,7 @@ import 'Ventas.dart';
 
 
 class CrearProducto extends StatefulWidget {
-  CrearProducto({Key key}) : super(key: key);
-
+ 
   @override
   _ProductoState createState() => _ProductoState();
 }
@@ -66,11 +65,7 @@ TextFormField buildTextFormFieldNombre() {
             child: buildTextFormFieldNombre(),
           ),
           SizedBox(height: 50.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              
-              ButtonTheme(
+          ButtonTheme(
                 
                 minWidth: 250.0,
                 height: 50.0,
@@ -101,14 +96,11 @@ TextFormField buildTextFormFieldNombre() {
                  Route route = MaterialPageRoute(builder: (bc) => Ventas());
                                Navigator.of(context).push(route);
                                //createData(); 
-                               db.collection('VentasProducto').document(producto).setData({'Producto': '$producto'});              
+                                db.collection('VentasProducto').document('$producto'); 
+                                        
             },
 ),
               ),
-              
-            ],
-            
-          ),
         
         ],
         
@@ -156,8 +148,9 @@ void createData() async {
       
 
       
-      DocumentReference ref = await db.collection('VentasProducto').document(producto);
+      DocumentReference ref = await db.collection('VentasProducto').document('$producto');   
       setState(() => id = ref.documentID);
+      
       print(ref.documentID);
     }
   }
