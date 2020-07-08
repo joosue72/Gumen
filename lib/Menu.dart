@@ -10,6 +10,7 @@ import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
 import 'Proveedores.dart';
+import 'Inventario.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -234,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => Gastos());
+                               Route route = MaterialPageRoute(builder: (bc) => Inventario());
                                Navigator.of(context).push(route);
                               
                              },
