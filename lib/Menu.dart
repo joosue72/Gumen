@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
+import 'package:gumen/Grafica_Meta.dart';
 import 'package:gumen/RegistroCliente.dart';
 import 'package:gumen/venta_grafica.dart';
 import 'Ventas.dart';
@@ -179,6 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             
                             child: Ink.image(image: AssetImage('images/stat.png'), height: 100, alignment: Alignment.center, 
+
+                            
                            ) , 
                             
                             
@@ -229,6 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
+<<<<<<< HEAD
                             child: Ink.image(image: AssetImage('images/inventario.png'), height: 100, alignment: Alignment.center, 
                            ) , 
                             
@@ -278,16 +282,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             
                             child: Ink.image(image: AssetImage('images/meta.png'), height: 100, alignment: Alignment.center, 
+=======
+                            child: Ink.image(image: AssetImage('images/gasto.png'), height: 100, alignment: Alignment.center, 
+>>>>>>> 30f4a9b699b998a0c7107d2361f843773526b711
                            ) , 
                             
                             
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => Gastos());
+                               Route route = MaterialPageRoute(builder: (bc) => Meta());
                                Navigator.of(context).push(route);
                               
                              },
                             ),
+                           
                         ),
                       ],
                     ),
