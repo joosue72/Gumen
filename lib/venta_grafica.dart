@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gumen/Ventas.dart';
 import 'package:gumen/venta_widget.dart';
 
 class venta_grafica extends StatefulWidget {
@@ -55,7 +56,6 @@ class _venta_graficaState extends State<venta_grafica> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               _bottomAction(FontAwesomeIcons.chartLine, () {
-                  print("asd");
                 setState(() {
                   
                   currentType = GraphType.LINES;
@@ -67,7 +67,11 @@ class _venta_graficaState extends State<venta_grafica> {
                 });
               }),
               SizedBox(width: 48.0),
-              _bottomAction(FontAwesomeIcons.wallet, () {}),
+              _bottomAction(FontAwesomeIcons.wallet, () {
+
+                
+                
+              }),
               _bottomAction(FontAwesomeIcons.signOutAlt, () {
               
               }),
@@ -77,7 +81,11 @@ class _venta_graficaState extends State<venta_grafica> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+            Navigator.push(context,  MaterialPageRoute(builder: (context) => Ventas()),);
+
+          
+        },
       ),
       body: _body(),
     );

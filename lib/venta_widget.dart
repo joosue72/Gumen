@@ -160,7 +160,7 @@ class _VentaWidgetState extends State<VentaWidget> {
               var key = widget.categories.keys.elementAt(index);
               var data = widget.categories[key];
               
-              return _item(FontAwesomeIcons.shoppingCart,key, 100*data ~/ widget.total,data);
+              return _item(FontAwesomeIcons.shoppingCart, key, 100 * data ~/ widget.total, data);
               }, 
             separatorBuilder: (BuildContext context, int index){
               return Container(

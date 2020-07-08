@@ -20,6 +20,7 @@ void main() {
         },
   routes: {
     'Empleado' : (BuildContext context) => RegistroCliente(),
+    
   },
 ));
 }

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
+import 'package:gumen/Grafica_Meta.dart';
 import 'package:gumen/RegistroCliente.dart';
 import 'package:gumen/venta_grafica.dart';
 import 'Ventas.dart';
@@ -177,6 +178,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             
                             child: Ink.image(image: AssetImage('images/stat.png'), height: 100, alignment: Alignment.center, 
+
+                            
                            ) , 
                             
                             
@@ -220,19 +223,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SvgPicture.network(
-                                'https://image.flaticon.com/icons/svg/1904/1904221.svg',
-                                height: 128,
-                              ),
-                              Text(
-                                'Course Plan',
-                                style: cardTextStyle,
-                              )
-                            ],
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
                           ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/gasto.png'), height: 100, alignment: Alignment.center, 
+                           ) , 
+                            
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => Meta());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
+                           
                         ),
                       ],
                     ),
