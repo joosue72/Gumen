@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
-import 'package:gumen/Grafica_Meta.dart';
+import 'package:gumen/Meta/Grafica_Meta.dart';
 import 'package:gumen/RegistroCliente.dart';
 import 'package:gumen/venta_grafica.dart';
 import 'Ventas.dart';

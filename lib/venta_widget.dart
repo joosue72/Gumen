@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gumen/VentasPendientes.dart';
 import 'package:gumen/details_page.dart';
+import 'package:intl/intl.dart';
 
 import 'Grafica_Pie.dart';
 import 'graph_widget.dart';
@@ -21,6 +23,8 @@ class VentaWidget extends StatefulWidget {
  final Map<String,double>categories;
  final GraphType graphType;
  final int month;
+ 
+ 
 
    VentaWidget({Key key,@required this.month, this.graphType,this.documents}) : 
     total = documents.map((doc) => doc['Costo'])
@@ -53,6 +57,8 @@ class VentaWidget extends StatefulWidget {
 class _VentaWidgetState extends State<VentaWidget> {
   @override
   Widget build(BuildContext context) {
+
+    
     return Expanded(
       child: Column(
       children: <Widget>[
@@ -171,6 +177,8 @@ class _VentaWidgetState extends State<VentaWidget> {
         ),
     );
   }
+
+
   
 }
 
