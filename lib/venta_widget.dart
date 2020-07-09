@@ -65,7 +65,7 @@ class _VentaWidgetState extends State<VentaWidget> {
        _expenses(),
           _graph(),
           Container(
-                color: Colors.blueAccent.withOpacity(0.1),
+                color: Colors.black.withOpacity(0.1),
                 height: 24.0,
               ),
           _list(),
@@ -146,7 +146,7 @@ class _VentaWidgetState extends State<VentaWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Text("\$$value",
             style: TextStyle(
-              color:Colors.blueAccent,
+              color:Colors.black,
               fontWeight: FontWeight.w500,
               fontSize: 18.0,
             ),
@@ -170,7 +170,7 @@ class _VentaWidgetState extends State<VentaWidget> {
               }, 
             separatorBuilder: (BuildContext context, int index){
               return Container(
-                color: Colors.blueAccent.withOpacity(0.15),
+                color: Colors.black.withOpacity(0.15),
                 height: 8.0,
               );
             },

@@ -11,6 +11,7 @@ import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
 import 'Proveedores.dart';
+import 'Inventario.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -231,7 +232,57 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-                            child: Ink.image(image: AssetImage('images/gasto.png'), height: 100, alignment: Alignment.center, 
+
+                            child: Ink.image(image: AssetImage('images/inventario.png'), height: 100, alignment: Alignment.center, 
+                           ) , 
+                            
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => Inventario());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
+                        ),
+                        Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/proveedor.png'), height: 100, alignment: Alignment.center, 
+                           ) , 
+                            
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => Proveedores());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
+                        ),
+                        Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/meta.png'), height: 100, alignment: Alignment.center, 
+
                            ) , 
                             
                             

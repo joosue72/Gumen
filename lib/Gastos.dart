@@ -197,8 +197,8 @@ class _GastosState extends State<Gastos> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            Colors.blueAccent,
             Colors.yellowAccent,
+            Colors.blueAccent,
           ],
         ),
       ),
