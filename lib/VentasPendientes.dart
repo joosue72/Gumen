@@ -197,7 +197,7 @@ SizedBox(width: 8),
         children: <Widget>[
           
              StreamBuilder<QuerySnapshot>(
-            stream: db.collection('Ventas').where("Pendiente", isEqualTo: false).snapshots(),
+            stream: db.collection('Ventas').where("Pendiente", isEqualTo: true).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(children: snapshot.data.documents.map((doc) => buildItem(doc)).toList());

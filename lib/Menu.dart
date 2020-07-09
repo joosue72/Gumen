@@ -232,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           elevation: 4,
                             color: Colors.white,
                             
-<<<<<<< HEAD
+
                             child: Ink.image(image: AssetImage('images/inventario.png'), height: 100, alignment: Alignment.center, 
                            ) , 
                             
@@ -282,9 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             
                             child: Ink.image(image: AssetImage('images/meta.png'), height: 100, alignment: Alignment.center, 
-=======
-                            child: Ink.image(image: AssetImage('images/gasto.png'), height: 100, alignment: Alignment.center, 
->>>>>>> 30f4a9b699b998a0c7107d2361f843773526b711
+
                            ) , 
                             
                             
