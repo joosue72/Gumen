@@ -2,34 +2,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class DetailsPage{
+class DetailsPage2{
   final String categoryName;
   final int month;
 
-  DetailsPage(this.categoryName, this.month);
+  DetailsPage2(this.categoryName, this.month);
 }
 
-class DetailsParams extends StatefulWidget {
-  final DetailsPage params;
+class DetailsParams2 extends StatefulWidget {
+  final DetailsPage2 params;
 
-  const DetailsParams({Key key, this.params}) : super(key: key);
+  const DetailsParams2({Key key, this.params}) : super(key: key);
   @override
-  _DetailsParamsState createState() => _DetailsParamsState();
+  _DetailsParams2State createState() => _DetailsParams2State();
 }
 
-class _DetailsParamsState extends State<DetailsParams> {
+class _DetailsParams2State extends State<DetailsParams2> {
   @override
   Widget build(BuildContext context) {
 
      var _query = Firestore.instance
-                .collection('Ventas')
+                .collection('Gastos')
                 .where("Mes", isEqualTo: widget.params.month + 1)
-                .where("Producto", isEqualTo: widget.params.categoryName)
+                .where("Nombre", isEqualTo: widget.params.categoryName)
                 .snapshots();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.params.categoryName),
+     appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0),
+        child: AppBar(
+          centerTitle: true,
+           title: Text("Descripción"),
+        backgroundColor: Colors.orange[700]
+        ),
+        
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _query,
@@ -44,7 +50,7 @@ class _DetailsParamsState extends State<DetailsParams> {
                   key: Key(document.documentID),
                   onDismissed: (direction){
                     Firestore.instance
-                      .collection('Ventas')
+                      .collection('Gastos')
                       .document(document.documentID)
                       .delete();
 
@@ -69,10 +75,10 @@ class _DetailsParamsState extends State<DetailsParams> {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text("\$${document["Costo"]}",
+                                  child: Text("\ ${document["Descripcion"]}",
                                     style: TextStyle(
-                                      color:Colors.blueAccent,
-                                      fontWeight: FontWeight.w500,
+                                      color:Colors.black,
+                                      fontWeight: FontWeight.w700,
                                       fontSize: 18.0,
                               ),
                            ),

@@ -25,7 +25,7 @@ String t ; double total;
 Timer _timer;
  double total1;
 
- double resultado =0 ;
+ double resultado ;
  double porcentaje = 0;
 class _MetaState extends State<Meta> {
  int currentPage = DateTime.now().month - 1;
@@ -34,7 +34,40 @@ class _MetaState extends State<Meta> {
   final db = Firestore.instance;
 
 
-  
+   @override
+  void initState() {
+    super.initState();
+    
+
+      int currentPage = DateTime.now().month - 1;
+        
+
+              db
+                .collection('Ventas')
+                .where("Mes", isEqualTo: currentPage + 1) 
+                .snapshots()
+                .listen((result) {
+                result.documents.forEach((result) { 
+                  t = result.data['Costo'].toString();
+
+                  total1 = double.parse(t);
+                  
+                
+                  
+                    resultado = resultado + double.parse(t);
+                
+                      
+                });
+          
+                  print(resultado); 
+                 
+                    
+                });
+            
+
+    setState(() {_expenses2();});
+      
+  }
  
 
     
@@ -46,10 +79,11 @@ class _MetaState extends State<Meta> {
 
 
    
-traermeta();
 
-   
+   traermeta();
 
+ 
+ 
 
  
 
@@ -98,39 +132,14 @@ traermeta();
   
 
   
-   void traermeta(){
+    traermeta() async{
 
      
 
-    int currentPage = DateTime.now().month - 1;
-        if(resultado == 0)
-            {      
-
-              db
-                .collection('Ventas')
-                .where("Mes", isEqualTo: currentPage + 1) 
-                .snapshots()
-                .listen((result) {
-                result.documents.forEach((result) { 
-                  t = result.data['Costo'].toString();
-
-                  total1 = double.parse(t);
-                  
-                
-                  
-                    resultado = resultado + double.parse(t);
-                
-                      
-                });
-          
-                  print(resultado); 
-                    
-                });
-            }
+  
 
 
-
-            _expenses();
+            
 
     
  
@@ -151,9 +160,11 @@ traermeta();
         porcentaje = (resultado * 100 /total)/100;
         print(porcentaje);
 
+       
+
      }
    
-  Widget _expenses() {
+  Widget _expenses()  {
    
     return Column(
       children: <Widget>[

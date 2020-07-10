@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
+import 'package:gumen/Grafica_Gastos/venta_grafica_gastos.dart';
 import 'package:gumen/Meta/Grafica_Meta.dart';
-import 'package:gumen/venta_grafica.dart';
+import 'Grafica_Ventas/venta_grafica.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
@@ -289,6 +290,33 @@ class _HomeScreenState extends State<HomeScreen> {
                              onPressed: (){
                                
                                Route route = MaterialPageRoute(builder: (bc) => Meta());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
+                           
+                        ),
+
+                        Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/meta.png'), height: 100, alignment: Alignment.center, 
+
+                           ) , 
+                            
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => venta_grafica2());
                                Navigator.of(context).push(route);
                               
                              },

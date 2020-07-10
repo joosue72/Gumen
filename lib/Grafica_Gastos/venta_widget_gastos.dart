@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gumen/VentasPendientes.dart';
-import 'package:gumen/details_page.dart';
-import 'package:intl/intl.dart';
+import 'details_page_gastos.dart';
 
-import 'Grafica_Pie.dart';
-import 'graph_widget.dart';
+import 'Grafica_Pie_gastos.dart';
+import 'graph_widget_gastos.dart';
 
 enum GraphType {
   LINES, PIE,
@@ -27,23 +25,23 @@ class VentaWidget extends StatefulWidget {
  
 
    VentaWidget({Key key,@required this.month, this.graphType,this.documents}) : 
-    total = documents.map((doc) => doc['Costo'])
+    total = documents.map((doc) => doc['Precio'])
             .fold(0.0, (a, b) => a + b),
      
      
      perDay = List.generate(30, (int index){
        return documents.where((doc) => doc['Dia'] ==(index + 1))
-        .map((doc) => doc['Costo'])
+        .map((doc) => doc['Precio'])
             .fold(0.0, (a, b) => a + b);
      }),       
 
       categories = documents.fold({}, (Map<String, double> map,document){
 
-        if(!map.containsKey(document['Producto'])){
-          map[document['Producto']] = 0.0;
+        if(!map.containsKey(document['Nombre'])){
+          map[document['Nombre']] = 0.0;
         }
 
-        map[document['Producto']] += document['Costo'];
+        map[document['Nombre']] += document['Precio'];
         return map;
 
       }),
@@ -84,7 +82,7 @@ class _VentaWidgetState extends State<VentaWidget> {
             fontSize: 40.0
           ),
         ),
-        Text("Total de Ventas",
+        Text("Total de Gastos",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16.0,
@@ -120,8 +118,8 @@ class _VentaWidgetState extends State<VentaWidget> {
   Widget _item(IconData icon, String nombre, int percent,double value){
     return ListTile(
       onTap: (){
-       Navigator.of(context).pushNamed("/details",
-            arguments: DetailsPage(nombre, widget.month));
+       Navigator.of(context).pushNamed("/details2",
+            arguments: DetailsPage2(nombre, widget.month));
       },
 
       leading: Icon(icon, size: 32.0,),
@@ -131,7 +129,7 @@ class _VentaWidgetState extends State<VentaWidget> {
           fontSize: 20.0 
         ),
       ),
-      subtitle: Text("$percent% de Ventas",
+      subtitle: Text("$percent% de Gastos",
         style: TextStyle(
           fontSize: 16.0,
           color:Colors.blueGrey

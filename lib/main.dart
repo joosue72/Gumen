@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gumen/Grafica_Gastos/details_page_gastos.dart';
 import 'package:gumen/RegistroCliente.dart';
 import 'dart:async';
 import 'Login.dart';
-import 'details_page.dart';
+import 'Grafica_Ventas/details_page.dart';
 
 
 
@@ -16,6 +17,12 @@ void main() {
            DetailsPage params = settings.arguments;
            return MaterialPageRoute(builder: (BuildContext context){
              return DetailsParams(params: params,);});
+         }
+
+         if(settings.name == '/details2'){
+           DetailsPage2 params = settings.arguments;
+           return MaterialPageRoute(builder: (BuildContext context){
+             return DetailsParams2(params: params,);});
          }
         },
   routes: {

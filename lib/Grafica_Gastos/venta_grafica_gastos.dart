@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gumen/Ventas.dart';
-import 'package:gumen/venta_widget.dart';
+import 'venta_widget_gastos.dart';
 
-class venta_grafica extends StatefulWidget {
+class venta_grafica2 extends StatefulWidget {
  
   
 
   @override
-  _venta_graficaState createState() => _venta_graficaState();
+  _venta_grafica2State createState() => _venta_grafica2State();
 }
 
-class _venta_graficaState extends State<venta_grafica> {
+class _venta_grafica2State extends State<venta_grafica2> {
 
    PageController _controller;
   int currentPage = DateTime.now().month - 1;
@@ -25,7 +26,7 @@ class _venta_graficaState extends State<venta_grafica> {
     super.initState();
 
     _query = Firestore.instance
-        .collection('Ventas')
+        .collection('Gastos')
         .where("Mes", isEqualTo: currentPage + 1)
         .snapshots();
 
@@ -47,8 +48,23 @@ class _venta_graficaState extends State<venta_grafica> {
 
   @override
   Widget build(BuildContext context) {
+
+        
     return Scaffold(
+
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0),
+        child: AppBar(
+          centerTitle: true,
+          title: Text('Lista de Gastos'),
+        backgroundColor: Colors.orange
+        ),
+        
+      ),
+      
       bottomNavigationBar: BottomAppBar(
+
+        
           notchMargin: 8.0,
           shape: CircularNotchedRectangle(),
           child: Row(
@@ -87,14 +103,20 @@ class _venta_graficaState extends State<venta_grafica> {
           
         },
       ),
+      
       body: _body(),
     );
+    
   }
 
   Widget _body() {
+    
     return SafeArea(
+      
       child: Column(
+        
         children: <Widget>[
+         
           _selector(),
           StreamBuilder<QuerySnapshot>(
             stream: _query,
@@ -154,6 +176,7 @@ class _venta_graficaState extends State<venta_grafica> {
     );
   }
 
+ 
   Widget _selector() {
     return SizedBox.fromSize(
       size: Size.fromHeight(70.0),
@@ -162,7 +185,7 @@ class _venta_graficaState extends State<venta_grafica> {
           setState(() {
             currentPage = newPage;
             _query = Firestore.instance
-                .collection('Ventas')
+                .collection('Gastos')
                 .where("Mes", isEqualTo: currentPage + 1)
                 .snapshots();
           });
