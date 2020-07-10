@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
-import 'package:gumen/Grafica_Meta.dart';
+import 'package:gumen/Meta/Grafica_Meta.dart';
 import 'package:gumen/venta_grafica.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';

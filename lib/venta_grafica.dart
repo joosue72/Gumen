@@ -100,12 +100,19 @@ class _venta_graficaState extends State<venta_grafica> {
             stream: _query,
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> data) {
               if (data.hasData) {
+
+                
+
+                // ignore: dead_code
                 return VentaWidget(
+
+                  
                   
                   documents: data.data.documents,
                   graphType: currentType,
                   month: currentPage,
                 );
+
               }
 
               return Center(
