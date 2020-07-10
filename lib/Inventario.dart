@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gumen/Menu.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:dio/dio.dart';
+
 
 
 
@@ -25,7 +25,7 @@ class _InventarioState extends State<Inventario> {
         scrollDirection: Axis.vertical,
         children: <Widget>[
            StreamBuilder<QuerySnapshot>(
-            stream: db.collection('VentasProducto').where("Cantidad", isGreaterThan: 0).snapshots(),
+            stream: db.collection('VentasProducto').where("Cantidad", isGreaterThan: -1).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(children: snapshot.data.documents.map((doc) => cardbuild(doc)).toList());

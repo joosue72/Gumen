@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'Ventas.dart';
-
+import 'package:flutter/widgets.dart';
 
 
 class CrearProducto extends StatefulWidget {
@@ -12,16 +12,17 @@ class CrearProducto extends StatefulWidget {
 
   final db = Firestore.instance;
   String id;
-  final _formKeyproducto = GlobalKey<FormState>();
- 
+  //final GlobalKey<FormState> _riKey1 = new GlobalKey<FormState>();
   String producto;
-
+  TextEditingController _textFieldController = TextEditingController();
 
 class _ProductoState extends State<CrearProducto> {
 
 
 TextFormField buildTextFormFieldNombre() {
+  
     return TextFormField(
+      controller: _textFieldController,
       decoration: InputDecoration(
         icon: Icon(
           Icons.storage,
@@ -29,6 +30,7 @@ TextFormField buildTextFormFieldNombre() {
         ),
         labelText: 'Producto',
         fillColor: Colors.white,
+        
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
         filled: true,
       ),
@@ -54,6 +56,7 @@ TextFormField buildTextFormFieldNombre() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       
       appBar: _getCustomAppBar(), 
       body: ListView(
         padding: EdgeInsets.all(8),
@@ -61,7 +64,8 @@ TextFormField buildTextFormFieldNombre() {
 
           SizedBox(height: 200.0),
           Form(
-            key: _formKeyproducto,
+            
+            //key: _riKey1,
             child: buildTextFormFieldNombre(),
           ),
           SizedBox(height: 50.0),
@@ -95,9 +99,8 @@ TextFormField buildTextFormFieldNombre() {
             onPressed: () {
                  Route route = MaterialPageRoute(builder: (bc) => Ventas());
                                Navigator.of(context).push(route);
-                               //createData(); 
-                                db.collection('VentasProducto').document('$producto'); 
-                                        
+                               producto = _textFieldController.text.toString();
+                               Firestore.instance.collection('VentasProducto').document("$producto").setData({'Producto': '$producto', 'Cantidad': 0});                        
             },
 ),
               ),
@@ -107,6 +110,7 @@ TextFormField buildTextFormFieldNombre() {
       ),
       
     );
+       
   }
 
   _getCustomAppBar(){
@@ -141,20 +145,6 @@ TextFormField buildTextFormFieldNombre() {
     ),
   );
 }
-
-void createData() async {
-    if (_formKeyproducto.currentState.validate()) {
-      _formKeyproducto.currentState.save();
-      
-
-      
-      DocumentReference ref = await db.collection('VentasProducto').document('$producto');   
-      setState(() => id = ref.documentID);
-      
-      print(ref.documentID);
-    }
-  }
-
 
 }
 

@@ -71,26 +71,7 @@ class _VentasState extends State<Ventas> {
       onSaved: (value) => nombre = value,
     );
   }
-  TextFormField buildTextFormFieldProducto() {
-    return TextFormField(
-      decoration: InputDecoration(
-        icon: Icon(
-          Icons.storage,
-          color: Colors.white,
-        ),
-        labelText: 'Producto',
-        fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-        filled: true,
-      ),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'No deje Campos Vacios';
-        }
-      },
-      onSaved: (value) => producto = value,
-    );
-  }
+  
 
   TextFormField buildTextFormField1() {
     return TextFormField(
@@ -140,6 +121,7 @@ class _VentasState extends State<Ventas> {
     );
     
   }
+  
   
  
 
@@ -490,10 +472,7 @@ class _VentasState extends State<Ventas> {
     }
   }
 
-  void readData() async {
-    DocumentSnapshot snapshot = await db.collection('Ventas').document(id).get();
-    print(snapshot.data['Nombre']);
-  }
+
 
    void actualizarInventario() async
  {

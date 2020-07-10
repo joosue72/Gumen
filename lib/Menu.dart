@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
 import 'package:gumen/Grafica_Meta.dart';
-import 'package:gumen/RegistroCliente.dart';
 import 'package:gumen/venta_grafica.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';
@@ -18,9 +15,13 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+bool _debugLocked = false;
+
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    assert(!_debugLocked);
+    
     // to get size
     var size = MediaQuery.of(context).size;
     // style
@@ -262,8 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             
                             
                              onPressed: (){
-                               
-                               Route route = MaterialPageRoute(builder: (bc) => Proveedores());
+                             Route route = MaterialPageRoute(builder: (bc) => Proveedores());
                                Navigator.of(context).push(route);
                               
                              },
@@ -306,4 +306,5 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+ 
 }

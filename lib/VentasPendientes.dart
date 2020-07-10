@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gumen/Gastos.dart';
-import 'package:gumen/Ventas.dart';
 import 'Menu.dart';
 import 'package:intl/intl.dart';
 
