@@ -11,7 +11,7 @@ class editar_meta extends StatefulWidget {
  String t ; double total;
 
 class _editar_metaState extends State<editar_meta> {
-
+GlobalKey<RefreshIndicatorState> refreshKey;
    final db = Firestore.instance;
  
   final _controller = TextEditingController();
@@ -21,14 +21,29 @@ class _editar_metaState extends State<editar_meta> {
   Widget build(BuildContext context) {
     traermeta();
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0),
+        child: AppBar(
+          centerTitle: true,
+          title: Text('Lista de Ventas'),
+        backgroundColor: Colors.orange
+        ),
+        
+      ),
+      body: RefreshIndicator(
+        key: refreshKey,
+        onRefresh: () async{
+         setState(() { traermeta(); });
+        }, 
+        child:ListView(
+       // mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(name),
           _expenses2(),
           Container(
             
             child: TextField(
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
                 controller: meta,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
@@ -69,7 +84,7 @@ class _editar_metaState extends State<editar_meta> {
           )
           
 
-        ],
+        ],)
         ),
       
     );

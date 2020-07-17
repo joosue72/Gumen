@@ -1,16 +1,29 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gumen/CrearProducto.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 
 import 'Editar_Meta.dart';
 
+const List<Key> keys = [
+    Key('Network'),
+    Key('Network Dialog'),
+    Key('Flare'),
+    Key('Flare Dialog'),
+    Key('Asset'),
+    Key('Asset dialog'),
+
+
+  ];
 
 class Meta extends StatefulWidget {
 
   
+
 
  
 
@@ -25,21 +38,26 @@ String t ; double total;
 Timer _timer;
  double total1;
 
- double resultado ;
+ double resultado;
  double porcentaje = 0;
 class _MetaState extends State<Meta> {
  int currentPage = DateTime.now().month - 1;
    Stream<QuerySnapshot> _query;
  
   final db = Firestore.instance;
-
+  GlobalKey<RefreshIndicatorState> refreshKey;
 
    @override
   void initState() {
     super.initState();
-    
 
+    refreshKey = GlobalKey<RefreshIndicatorState>();
+     traermeta();
+    
+          
+    
       int currentPage = DateTime.now().month - 1;
+      resultado = 0;
         
 
               db
@@ -55,6 +73,7 @@ class _MetaState extends State<Meta> {
                 
                   
                     resultado = resultado + double.parse(t);
+                     
                 
                       
                 });
@@ -65,13 +84,39 @@ class _MetaState extends State<Meta> {
                 });
             
 
-    setState(() {_expenses2();});
+    
       
   }
+
+   Widget _expenses()  {
+
+    return Column(
+      children: <Widget>[
+
+        
+        Text("\$${total}",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 40.0
+          ),
+        ),
+        Text("Meta de Ventas",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16.0,
+            color: Colors.blueGrey,
+          ),
+        ),
+      ],
+    );
+  }
+
  
 
     
- 
+ Future<Null> refreshList() async {
+   await Future.delayed(Duration(seconds: 2));
+ }
  
    @override
    
@@ -79,11 +124,9 @@ class _MetaState extends State<Meta> {
 
 
    
+      
 
-   traermeta();
 
- 
- 
 
  
 
@@ -91,15 +134,37 @@ class _MetaState extends State<Meta> {
     
     return Scaffold(
       
-      
-
       appBar: AppBar(title:Text("Meta de Ventas"),),
-      body: Container(
-        padding:EdgeInsets.all(25.0),
-        child:Column(
+      body: RefreshIndicator(
+        //padding:EdgeInsets.all(25.0),
+        key: refreshKey,
+        onRefresh: () async{
+         setState(() {
+       
+         
+         if(total > resultado){
+        
+        porcentaje = (resultado * 100 /total)/100;
+         _expenses();
+         _expenses();
+       
+        }
+
+        else{
+          porcentaje = .01000 * 100;
+          
+        }
+  
+         });
+        }, 
+        
+        child:ListView(
+          
           children: <Widget>[
             
+            
             _expenses(),
+            
             CircularPercentIndicator(
               progressColor: Colors.redAccent,
               percent: porcentaje,
@@ -157,37 +222,18 @@ class _MetaState extends State<Meta> {
               
         });
 
-        porcentaje = (resultado * 100 /total)/100;
-        print(porcentaje);
+       
 
+    
        
 
      }
    
-  Widget _expenses()  {
-   
-    return Column(
-      children: <Widget>[
-        
-        Text("\$${total}",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 40.0
-          ),
-        ),
-        Text("Meta de Ventas",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16.0,
-            color: Colors.blueGrey,
-          ),
-        ),
-      ],
-    );
-  }
-
+ 
 
   Widget _expenses2() {
+    
+   
    
     return Column(
       children: <Widget>[
@@ -206,9 +252,11 @@ class _MetaState extends State<Meta> {
           ),
         ),
       ],
+      
     );
+    
   }
-
+ 
    _crearBoton(BuildContext context) {
     return FloatingActionButton(
       child: Icon( Icons.add ),
@@ -221,6 +269,8 @@ class _MetaState extends State<Meta> {
     );
   }
 
+
+  
 
  
 }

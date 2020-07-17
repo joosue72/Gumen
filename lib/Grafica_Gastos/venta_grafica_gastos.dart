@@ -116,7 +116,8 @@ class _venta_grafica2State extends State<venta_grafica2> {
       child: Column(
         
         children: <Widget>[
-         
+          
+
           _selector(),
           StreamBuilder<QuerySnapshot>(
             stream: _query,
@@ -209,3 +210,4 @@ class _venta_grafica2State extends State<venta_grafica2> {
     );
   }
 }
+

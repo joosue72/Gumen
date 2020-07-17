@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gumen/Empleados.dart';
@@ -18,7 +20,46 @@ class HomeScreen extends StatefulWidget {
 
 bool _debugLocked = false;
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin{
+
+  AnimationController animationController;
+  Animation degOneTranlationAnimation,degTwoTranlationAnimation,degthreeTranlationAnimation;
+  Animation rotationAnimation;
+
+  double getRadiansFromDegree(double degree)
+  {
+    double unitRadian = 57.295779513;
+    return degree / unitRadian;
+      }
+
+  @override
+  void initState(){
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 250));
+    degOneTranlationAnimation = TweenSequence([
+      TweenSequenceItem<double>(tween: Tween<double> (begin: 0.0,end: 1.2),weight: 75.0),
+      TweenSequenceItem<double>(tween: Tween<double> (begin: 1.2,end: 1.0),weight: 25.0),
+
+    ]).animate(animationController);
+    degTwoTranlationAnimation = TweenSequence([
+      TweenSequenceItem<double>(tween: Tween<double> (begin: 0.0,end: 1.4),weight: 55.0),
+      TweenSequenceItem<double>(tween: Tween<double> (begin: 1.4,end: 1.0),weight: 45.0),
+
+    ]).animate(animationController);
+    degthreeTranlationAnimation = TweenSequence([
+      TweenSequenceItem<double>(tween: Tween<double> (begin: 0.0,end: 1.75),weight: 35.0),
+      TweenSequenceItem<double>(tween: Tween<double> (begin: 1.75,end: 1.0),weight: 65.0),
+
+    ]).animate(animationController);
+    rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(CurvedAnimation(parent: animationController,
+    curve: Curves.easeOut));
+    super.initState();
+    animationController.addListener((){
+      setState(() {
+        
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(!_debugLocked);
@@ -35,7 +76,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
+
+        
+
         children: <Widget>[
+         
+         
+
           Container(
             height: size.height * .3,
             decoration: BoxDecoration(
@@ -52,7 +99,99 @@ class _HomeScreenState extends State<HomeScreen> {
              )
             ),
           ),
+           Positioned(
+            
+            
+            right: 30,
+            bottom: 630,
+            child: Stack(
+              
+              children: <Widget>[
+
+                 Transform.translate(
+                   offset: Offset.fromDirection(getRadiansFromDegree(200), degOneTranlationAnimation.value *100),
+                   child: Transform(
+                      transform:Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value))..scale(degOneTranlationAnimation.value),
+                      alignment: Alignment.center,
+
+                      child: CircularButton(
+                      
+                      color: Colors.orangeAccent,
+                      width: 50,
+                      height: 50,
+                      icon: Icon(
+                        Icons.person,
+                        color:Colors.white
+                      ),
+                ),
+                   ),
+                 ),
+                Transform.translate
+                (
+                   offset: Offset.fromDirection(getRadiansFromDegree(170),degTwoTranlationAnimation.value *100),
+                  child: Transform(
+                     transform:Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value))..scale(degTwoTranlationAnimation.value),
+                      alignment: Alignment.center,
+                                      child: CircularButton(
+                      
+                      color: Colors.blue,
+                      width: 50,
+                      height: 50,
+                      icon: Icon(
+                        Icons.add,
+                        color:Colors.white
+                      ),
+                    ),
+                  ),
+                ),
+                Transform.translate(
+                                  
+                     offset: Offset.fromDirection(getRadiansFromDegree(140),  degthreeTranlationAnimation.value *100),
+                    child: Transform(
+                     transform:Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value))..scale(degthreeTranlationAnimation.value),
+                      alignment: Alignment.center,
+                     child: CircularButton(
+                      
+                      color: Colors.black,
+                      
+                      width: 50,
+                      height: 50,
+                      icon: Icon(
+                        Icons.camera_alt,
+                        color:Colors.white
+                      ),
+                  ),
+                    ),
+                ),
+                Transform(
+                   transform:Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value)),
+                      alignment: Alignment.center,
+                                  child: CircularButton(
+                    
+                   
+                    color: Colors.red,
+                    
+                    width: 60,
+                    height: 60,
+                    icon: Icon(
+                      Icons.menu,
+                      color:Colors.white
+                    ),
+                    onClick: (){
+                      if(animationController.isCompleted){
+                        animationController.reverse();
+                      }
+                      else{
+                        animationController.forward();
+                      }
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
           SafeArea(
+            
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Column(
@@ -288,6 +427,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             
                             
                              onPressed: (){
+
+                    
                                
                                Route route = MaterialPageRoute(builder: (bc) => Meta());
                                Navigator.of(context).push(route);
@@ -316,6 +457,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             
                              onPressed: (){
                                
+                               
                                Route route = MaterialPageRoute(builder: (bc) => venta_grafica2());
                                Navigator.of(context).push(route);
                               
@@ -327,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ],
-              ),
+              ),  
             ),
           ),
         ],
@@ -335,4 +477,26 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
  
+}
+
+
+class CircularButton extends StatelessWidget {
+ final double width;
+ final double height;
+ final Color color;
+ final Icon icon;
+ final Function onClick;
+
+  const CircularButton({Key key, this.width, this.height, this.color, this.icon, this.onClick}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      width: width,
+      height: height,
+      child: IconButton(icon: icon,enableFeedback: true, onPressed: onClick),
+      
+    );
+  }
 }
