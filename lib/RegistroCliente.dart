@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:gumen/Ventas.dart';
 import 'package:gumen/models/empleado_model.dart';
 import 'package:gumen/providers/empleados_provider.dart';
 import 'package:image_picker/image_picker.dart';

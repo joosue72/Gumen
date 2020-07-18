@@ -373,8 +373,8 @@ class _VentasState extends State<Ventas> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            Colors.yellowAccent,
-            Colors.orangeAccent,
+            Color(0xFFFFC107),
+            Color(0xFFFFE57F),
           ],
         ),
       ),

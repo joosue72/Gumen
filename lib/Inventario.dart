@@ -116,7 +116,7 @@ class _InventarioState extends State<Inventario> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            Colors.deepOrangeAccent,
+            Color(0xFFFFC107),
             Colors.redAccent,
           ],
         ),

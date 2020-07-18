@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gumen/Menu.dart';
 import 'package:gumen/Ventas.dart';
 import 'venta_widget.dart';
 
@@ -48,15 +49,7 @@ class _venta_graficaState extends State<venta_grafica> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40.0),
-        child: AppBar(
-          centerTitle: true,
-          title: Text('Lista de Ventas'),
-        backgroundColor: Colors.orange
-        ),
-        
-      ),
+     appBar: _getCustomAppBar(),
       bottomNavigationBar: BottomAppBar(
           notchMargin: 8.0,
           shape: CircularNotchedRectangle(),
@@ -89,7 +82,9 @@ class _venta_graficaState extends State<venta_grafica> {
         ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        
         child: Icon(Icons.add),
+        backgroundColor: Colors.orange,
         onPressed: () {
             Navigator.push(context,  MaterialPageRoute(builder: (context) => Ventas()),);
 
@@ -194,4 +189,35 @@ class _venta_graficaState extends State<venta_grafica> {
       ),
     );
   }
+  _getCustomAppBar(){
+  return PreferredSize(
+    preferredSize: Size.fromHeight(50),
+    child: Container(
+      alignment: Alignment.bottomCenter,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Colors.deepOrangeAccent,
+            Colors.yellowAccent,
+          ],
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+        IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
+          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => HomeScreen()),
+  );
+
+        }),
+        Text('Lista Ventas', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        IconButton(icon: Icon(Icons.trending_up), onPressed: (){}),
+      ],),
+    ),
+  );
+}
 }

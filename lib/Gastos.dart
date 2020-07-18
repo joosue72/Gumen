@@ -151,7 +151,7 @@ class _GastosState extends State<Gastos> {
                 minWidth: 250.0,
                 height: 50.0,
                 child: RaisedButton(
-    color: Colors.blueAccent, 
+    color: Color(0xFF0277BD), 
     child: Row( 
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max, 
@@ -197,8 +197,8 @@ class _GastosState extends State<Gastos> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            Colors.yellowAccent,
-            Colors.blueAccent,
+            Color(0xFFFFC107),
+            Color(0xFF0277BD),
           ],
         ),
       ),
@@ -212,7 +212,7 @@ class _GastosState extends State<Gastos> {
   );
 
         }),
-        Text('Gastos', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        Text('Gastos', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: Colors.white),),
         IconButton(icon: Icon(Icons.monetization_on), onPressed: (){}),
       ],),
     ),

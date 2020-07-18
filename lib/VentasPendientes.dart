@@ -56,7 +56,7 @@ TextEditingController _textFieldController = TextEditingController();
 
   
   Card buildItem(DocumentSnapshot doc) {
-    TextEditingController _textcantidad = TextEditingController();
+    
     nombre = doc.data['Nombre'];
     
     return Card(
@@ -222,8 +222,8 @@ SizedBox(width: 8),
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            Colors.deepOrangeAccent,
-            Colors.yellowAccent,
+            Color(0xFFFFC107),
+            Color(0xFFFFE57F),
           ],
         ),
       ),

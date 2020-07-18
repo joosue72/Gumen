@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gumen/CrearProducto.dart';
+import 'package:gumen/Menu.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
 
 import 'Editar_Meta.dart';
 
@@ -134,7 +133,7 @@ class _MetaState extends State<Meta> {
     
     return Scaffold(
       
-      appBar: AppBar(title:Text("Meta de Ventas"),),
+      appBar: _getCustomAppBar(),
       body: RefreshIndicator(
         //padding:EdgeInsets.all(25.0),
         key: refreshKey,
@@ -162,6 +161,7 @@ class _MetaState extends State<Meta> {
           
           children: <Widget>[
             
+            SizedBox(height: 30),
             
             _expenses(),
             
@@ -195,22 +195,42 @@ class _MetaState extends State<Meta> {
     );
    }
   
+  _getCustomAppBar(){
+  return PreferredSize(
+    preferredSize: Size.fromHeight(50),
+    child: Container(
+      alignment: Alignment.bottomCenter,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Color(0xFFFFC107),
+            Color(0xFFFFFFFF),
+          ],
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+        IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
+          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => HomeScreen()),
+    
+  );
+
+        }),
+        Text('Meta', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        IconButton(icon: Icon(Icons.inbox), onPressed: (){}),
+      ],),
+    ),
+  );
+}
 
   
     traermeta() async{
-
-     
-
-  
-
-
-            
-
-    
- 
-        
-        
-          db
+       db
           .collection("Meta")
           .snapshots()
           .listen((result) {
@@ -259,8 +279,9 @@ class _MetaState extends State<Meta> {
  
    _crearBoton(BuildContext context) {
     return FloatingActionButton(
-      child: Icon( Icons.add ),
-      backgroundColor: Colors.orange,
+      child: Icon( Icons.add , color: Colors.black),
+      backgroundColor: Color(0xFFFFC107),
+            
       onPressed: (){
                                
          Route route = MaterialPageRoute(builder: (bc) => editar_meta());

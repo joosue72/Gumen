@@ -137,7 +137,7 @@ class _VentaWidgetState extends State<VentaWidget> {
       ),
       trailing: Container(
         decoration: BoxDecoration(
-          color: Colors.blueAccent.withOpacity(0.2),
+          color: Colors.orangeAccent.withOpacity(0.4),
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Padding(
@@ -147,6 +147,7 @@ class _VentaWidgetState extends State<VentaWidget> {
               color:Colors.black,
               fontWeight: FontWeight.w500,
               fontSize: 18.0,
+               
             ),
           ),
         )

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gumen/Gastos.dart';
+import 'package:gumen/CrearProveedor.dart';
 import 'package:gumen/Menu.dart';
 import 'package:intl/intl.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
@@ -14,20 +14,22 @@ class Proveedores extends StatefulWidget {
   _ProveedoresState createState() => _ProveedoresState();
 }
 var selectedCurrency, selectedType;
+var selectedCurrency1, selectedType1;
 final db = Firestore.instance;
   String id;
-  String nombre;
+
   String descripcion;
   double cantidadInventario;
 String productoInventario;
 int cont;
   DateTime now = DateTime.now();
 String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
-  double cantidad, pago;
+  double cantidad, pago, abono;
   TextEditingController _textFieldController = TextEditingController();
-  TextEditingController _textNombre = TextEditingController();
+
   TextEditingController _textDescripcion = TextEditingController();
   TextEditingController _textPago = TextEditingController();
+  TextEditingController _textAbono = TextEditingController();
   bool pendiente;
   
   
@@ -41,27 +43,7 @@ class _ProveedoresState extends State<Proveedores> {
     
   }
 
-  TextFormField nombreProveedor() {
-    return TextFormField(
-      controller: _textNombre,
-      decoration: InputDecoration(
-        icon: Icon(
-          Icons.person,
-          color: Colors.black,
-        ),
-        labelText: 'Nombre',
-        fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-        filled: true,
-      ),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'No deje Campos Vacios';
-        }
-      },
-      onSaved: (value) => nombre = value,
-    );
-  }
+
   TextFormField descripcionProveedor() {
     return TextFormField(
     controller: _textDescripcion,  
@@ -135,11 +117,35 @@ class _ProveedoresState extends State<Proveedores> {
     );
     
   }
+  TextFormField abonoProveedor() {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      controller: _textAbono,
+      decoration: InputDecoration(
+        icon: Icon(
+          Icons.attach_money,
+          color: Colors.black,
+        ),
+         labelText: 'Abono',
+         fillColor: Colors.white,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+        filled: true,
+      ),
+      
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'No deje Campos Vacios';
+        }
+      }, 
+      onSaved: (value) => abono = double.tryParse(value),
+    );
+    
+  }
 
 
   @override
   Widget build(BuildContext context) {
-      
+    
     return Scaffold(
       resizeToAvoidBottomInset: false,
        backgroundColor: Colors.white,
@@ -150,7 +156,98 @@ class _ProveedoresState extends State<Proveedores> {
         children: <Widget>[
           SizedBox(height: 50.0),
           Form(
-            child: nombreProveedor(),
+            //Nombre
+            child:  ListView(
+              scrollDirection: Axis.vertical,
+    shrinkWrap: true,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.person, color: Colors.black),
+                    SizedBox(width: 55.0,),
+                     StreamBuilder<QuerySnapshot>(
+                       
+                  stream: db.collection('NombresProveedores').snapshots(),
+                  
+                  builder: (context, snapshot) {
+                    
+                    if (!snapshot.hasData)
+
+                      const Text("Loading.....");
+                    else {
+                      List<DropdownMenuItem> currencyItems = [];
+                      for (int i = 0; i < snapshot.data.documents.length; i++) {
+                        DocumentSnapshot snap = snapshot.data.documents[i];
+                        currencyItems.add(
+                          DropdownMenuItem(
+                            child: Text(
+                              
+                              snap.reference.documentID,
+                              style: TextStyle(color: Color.fromARGB(255,98,97,97)),
+                            ),
+                            value: "${snap.documentID}",
+                          ),
+                        );
+                      }return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          
+                          
+                          DropdownButton(
+                            
+                            items: currencyItems,
+                            onChanged: (currencyValue) {
+                              final snackBar = SnackBar(
+                                backgroundColor: Colors.black,
+                                content: Text(
+                                  'Proveedor: $currencyValue',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                              Scaffold.of(context).showSnackBar(snackBar);
+                              setState(() {
+                                selectedCurrency1 = currencyValue;
+                              });
+                            },
+                            value: selectedCurrency1,
+                            isExpanded: false,
+                            hint: new Text(
+                              "Seleccione Proveedor",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  }),
+                  SizedBox(width: 10.0,),
+                   Container(
+        height: 40.0,
+        width: 40.0,
+        child: FittedBox(
+        
+         child: FloatingActionButton(
+           
+            child: Icon( Icons.add ),
+            backgroundColor: Color(0xFF64DD17),
+      
+      onPressed: (){
+                               
+         Route route = MaterialPageRoute(builder: (bc) => CrearProveedor());
+         
+         Navigator.of(context).push(route);
+         },
+    ),
+        ),
+                  ),
+                  SizedBox(width: 10.0,),
+                  ],
+                  
+                ),
+                
+              ],
+            ),
           ),
           SizedBox(height: 20.0),
           Form(
@@ -243,6 +340,10 @@ class _ProveedoresState extends State<Proveedores> {
           ),
           SizedBox(height: 20.0),
           Form(
+            child: abonoProveedor(),
+          ),
+          SizedBox(height: 20.0),
+          Form(
              child:LiteRollingSwitch(
     //initial value
      
@@ -277,7 +378,7 @@ class _ProveedoresState extends State<Proveedores> {
                 minWidth: 250.0,
                 height: 50.0,
                 child: RaisedButton(
-    color: Colors.green, 
+    color: Color(0xFF64DD17), 
     child: Row( 
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max, 
@@ -305,7 +406,10 @@ class _ProveedoresState extends State<Proveedores> {
                               
                                createData();  
                                actualizarInventario();
-                                          
+                                
+     _textDescripcion.text = "";
+     _textFieldController.text = "";
+     _textPago.text = "";            
             },
 ),
               ),
@@ -331,8 +435,8 @@ class _ProveedoresState extends State<Proveedores> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            Colors.greenAccent,
-            Colors.yellowAccent,
+            Color(0xFFFFC107),
+            Color(0xFF64DD17),
           ],
         ),
       ),
@@ -355,16 +459,18 @@ class _ProveedoresState extends State<Proveedores> {
 }
 void createData() async {
     
-      nombre = _textNombre.text;
+      
       descripcion = _textDescripcion.text;
       cantidad = double.parse(_textFieldController.text);
       pago = double.parse(_textPago.text);
+      abono = double.parse(_textAbono.text);
       String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
       
       if(pendiente == false)
       {
         pendiente = true;
-        DocumentReference ref = await db.collection('Proveedores').add({'Nombre': '$nombre', 'Cantidad': cantidad,'Abono': pago, 'Pago': pago = 0, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Descripcion': descripcion});
+        DocumentReference ref = await db.collection('Proveedores').add({'NombreProveedor': '$selectedCurrency1', 'Cantidad': cantidad,'Abono': abono, 'Pago': pago, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Descripcion': descripcion});
+        
       setState(() => id = ref.documentID);
 
 
@@ -372,7 +478,8 @@ void createData() async {
 
       else {
         pendiente = false;
-        DocumentReference ref = await db.collection('Ventas').add({'Nombre': '$nombre', 'Cantidad': cantidad, 'Pago': pago, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Descripcion': descripcion});
+        DocumentReference ref = await db.collection('Ventas').add({'NombreProveedor': '$selectedCurrency1', 'Cantidad': cantidad,'Abono': abono, 'Pago': pago, 'Fecha': '$fecha','Producto': '$selectedCurrency', 'Pendiente': pendiente, 'Descripcion': descripcion});
+       
       setState(() => id = ref.documentID); 
       }
   }

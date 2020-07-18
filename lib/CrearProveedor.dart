@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Ventas.dart';
-import 'package:flutter/widgets.dart';
+import 'package:gumen/Proveedores.dart';
 
+class CrearProveedor extends StatefulWidget {
+  CrearProveedor({Key key}) : super(key: key);
 
-class CrearProducto extends StatefulWidget {
- 
   @override
-  _ProductoState createState() => _ProductoState();
+  _CrearProveedorState createState() => _CrearProveedorState();
 }
 
-  final db = Firestore.instance;
-  String id;
-  //final GlobalKey<FormState> _riKey1 = new GlobalKey<FormState>();
-  String producto;
-  TextEditingController _textFieldController = TextEditingController();
+ final db = Firestore.instance;
+ String id;
+ String nombre;
+ TextEditingController _textFieldController = TextEditingController();
 
-class _ProductoState extends State<CrearProducto> {
+class _CrearProveedorState extends State<CrearProveedor> {
 
-
-TextFormField buildTextFormFieldNombre() {
+  TextFormField crearnuevoProveedor() {
   
     return TextFormField(
       controller: _textFieldController,
       decoration: InputDecoration(
         icon: Icon(
-          Icons.storage,
+          Icons.person,
           color: Colors.black,
         ),
-        labelText: 'Producto',
+        labelText: 'Proveedor',
         fillColor: Colors.white,
         
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
@@ -39,18 +36,9 @@ TextFormField buildTextFormFieldNombre() {
           return 'No deje Campos Vacios';
         }
       },
-      onSaved: (value) => producto = value,
+      onSaved: (value) => nombre = value,
     );
   }
-
-
-
-
-
-
-
-
-
 
 
   @override
@@ -66,7 +54,7 @@ TextFormField buildTextFormFieldNombre() {
           Form(
             
             //key: _riKey1,
-            child: buildTextFormFieldNombre(),
+            child: crearnuevoProveedor(),
           ),
           SizedBox(height: 50.0),
           ButtonTheme(
@@ -74,7 +62,7 @@ TextFormField buildTextFormFieldNombre() {
                 minWidth: 250.0,
                 height: 50.0,
                 child: RaisedButton(
-    color: Colors.orange, 
+    color: Color(0xFF64DD17), 
     child: Row( 
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max, 
@@ -97,10 +85,10 @@ TextFormField buildTextFormFieldNombre() {
     ],
     ),
             onPressed: () {
-                 Route route = MaterialPageRoute(builder: (bc) => Ventas());
+                 Route route = MaterialPageRoute(builder: (bc) => Proveedores());
                                Navigator.of(context).push(route);
-                               producto = _textFieldController.text.toString();
-                               Firestore.instance.collection('VentasProducto').document("$producto").setData({'Producto': '$producto', 'Cantidad': 0});                        
+                               nombre = _textFieldController.text.toString();
+                               Firestore.instance.collection('NombresProveedores').document("$nombre").setData({'NombreProveedor': '$nombre'});                        
             },
 ),
               ),
@@ -110,10 +98,9 @@ TextFormField buildTextFormFieldNombre() {
       ),
       
     );
-       
   }
 
-  _getCustomAppBar(){
+   _getCustomAppBar(){
   return PreferredSize(
     preferredSize: Size.fromHeight(60),
     child: Container(
@@ -124,7 +111,7 @@ TextFormField buildTextFormFieldNombre() {
           end: Alignment.centerRight,
           colors: [
             Color(0xFFFFC107),
-            Color(0xFFFFE57F),
+            Color(0xFF64DD17),
           ],
         ),
       ),
@@ -134,18 +121,15 @@ TextFormField buildTextFormFieldNombre() {
         IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
           Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Ventas()),
+    MaterialPageRoute(builder: (context) => Proveedores()),
     
   );
 
         }),
-        Text('Crear Producto', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        Text('Nuevo Proveedor', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
         IconButton(icon: Icon(Icons.create), onPressed: (){}),
       ],),
     ),
   );
 }
-
 }
-
- 

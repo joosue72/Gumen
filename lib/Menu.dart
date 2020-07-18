@@ -1,10 +1,9 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
-import 'package:gumen/Grafica_Gastos/venta_grafica_gastos.dart';
+import 'package:gumen/MenuGraficas.dart';
 import 'package:gumen/Meta/Grafica_Meta.dart';
 import 'Grafica_Ventas/venta_grafica.dart';
 import 'Ventas.dart';
@@ -78,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       body: Stack(
 
         
-
+        
         children: <Widget>[
          
          
@@ -88,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
 
-             gradient: new LinearGradient(colors: [const Color(0xFFba8d13), const Color(0xFFffffff)],
+             gradient: new LinearGradient(colors: [const Color(0xFFFFC107), const Color(0xFFFFE57F)],
                 begin: FractionalOffset.topLeft,
                 end: FractionalOffset.bottomRight,
                 stops: [0.0,1.0],
@@ -190,6 +189,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ],
             ),
           ),
+          
           SafeArea(
             
             child: Padding(
@@ -204,9 +204,9 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                       children: <Widget>[
                         CircleAvatar(
                           radius: 42,
-                          backgroundColor: Colors.yellow,
+                          backgroundColor: Color(0xFFFFC107),
                           backgroundImage: AssetImage(
-                              'assets/logogumen.png'),
+                              'assets/logogumen3.png'),
                         ),
                         SizedBox(
                           width: 16,
@@ -216,13 +216,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     ),
                   ),
                   Expanded(
+                    
                     child: GridView.count(
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       primary: false,
                       crossAxisCount: 2,
                       children: <Widget>[
-
+                        
                         Card(
                           shape:RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)
@@ -233,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                            color: Colors.white,
+                            color: Color(0xFFFFC107),
                             
                             child: Ink.image(image: AssetImage('images/carrito1.png'), height: 100, alignment: Alignment.center, 
                            ) , 
@@ -261,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                            color: Colors.white,
+                            color: Color(0xFFFFD600),
                             
                             child: Ink.image(image: AssetImage('images/pendientes.png'), height: 100, alignment: Alignment.center, 
                            ) , 
@@ -290,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                            color: Colors.white,
+                            color: Color(0xFFF57F17),
                             
                             child: Ink.image(image: AssetImage('images/nomina1.png'), height: 100, alignment: Alignment.center, 
                            ) , 
@@ -318,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                            color: Colors.white,
+                            color: Color(0xFFD500F9),
                             
                             child: Ink.image(image: AssetImage('images/stat.png'), height: 100, alignment: Alignment.center, 
 
@@ -328,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => venta_grafica());
+                               Route route = MaterialPageRoute(builder: (bc) => MenuGrafica());
                                Navigator.of(context).push(route);
                               
                              },
@@ -345,7 +346,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                            color: Colors.white,
+                            color: Color(0xFF00BCD4),
                             
                             child: Ink.image(image: AssetImage('images/gasto.png'), height: 100, alignment: Alignment.center, 
                            ) , 
@@ -371,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                            color: Colors.white,
+                            color: Color(0xFF0FF1714),
                             
 
                             child: Ink.image(image: AssetImage('images/inventario.png'), height: 100, alignment: Alignment.center, 
@@ -396,7 +397,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                            color: Colors.white,
+                            color: Color(0xFF64DD17),
                             
                             child: Ink.image(image: AssetImage('images/proveedor.png'), height: 100, alignment: Alignment.center, 
                            ) , 
@@ -438,33 +439,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                            
                         ),
 
-                        Card(
-                          shape:RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)
-                          ),
-                          elevation: 4,
-                          child: RaisedButton(
-                             shape:RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)
-                          ),
-                          elevation: 4,
-                            color: Colors.white,
-                            
-                            child: Ink.image(image: AssetImage('images/meta.png'), height: 100, alignment: Alignment.center, 
-
-                           ) , 
-                            
-                            
-                             onPressed: (){
-                               
-                               
-                               Route route = MaterialPageRoute(builder: (bc) => venta_grafica2());
-                               Navigator.of(context).push(route);
-                              
-                             },
-                            ),
-                           
-                        ),
+                       
                       ],
                     ),
                   ),

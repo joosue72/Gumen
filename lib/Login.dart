@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gumen/Animation/FadeAnimation.dart';
-import 'package:gumen/VentasPendientes.dart';
 import 'Menu.dart';
-import 'dart:async';
+
 
 class Login extends StatelessWidget {
   @override
@@ -41,7 +40,7 @@ class Login extends StatelessWidget {
                         
                         image: DecorationImage(
                           
-                          image: AssetImage('assets/logogumen.png')
+                          image: AssetImage('assets/logogumen3.png')
                           
                         )
                       ),
