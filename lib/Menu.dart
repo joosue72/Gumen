@@ -5,12 +5,11 @@ import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
 import 'package:gumen/MenuGraficas.dart';
 import 'package:gumen/Meta/Grafica_Meta.dart';
-import 'Grafica_Ventas/venta_grafica.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
-import 'Proveedores.dart';
 import 'Inventario.dart';
+import 'MenuProveedores.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,9 +20,7 @@ bool _debugLocked = false;
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin{
 
-  AnimationController animationController;
-  Animation degOneTranlationAnimation,degTwoTranlationAnimation,degthreeTranlationAnimation;
-  Animation rotationAnimation;
+  
 
   double getRadiansFromDegree(double degree)
   {
@@ -31,33 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
     return degree / unitRadian;
       }
 
-  @override
-  void initState(){
-    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 250));
-    degOneTranlationAnimation = TweenSequence([
-      TweenSequenceItem<double>(tween: Tween<double> (begin: 0.0,end: 1.2),weight: 75.0),
-      TweenSequenceItem<double>(tween: Tween<double> (begin: 1.2,end: 1.0),weight: 25.0),
-
-    ]).animate(animationController);
-    degTwoTranlationAnimation = TweenSequence([
-      TweenSequenceItem<double>(tween: Tween<double> (begin: 0.0,end: 1.4),weight: 55.0),
-      TweenSequenceItem<double>(tween: Tween<double> (begin: 1.4,end: 1.0),weight: 45.0),
-
-    ]).animate(animationController);
-    degthreeTranlationAnimation = TweenSequence([
-      TweenSequenceItem<double>(tween: Tween<double> (begin: 0.0,end: 1.75),weight: 35.0),
-      TweenSequenceItem<double>(tween: Tween<double> (begin: 1.75,end: 1.0),weight: 65.0),
-
-    ]).animate(animationController);
-    rotationAnimation = Tween<double>(begin: 180.0, end: 0.0).animate(CurvedAnimation(parent: animationController,
-    curve: Curves.easeOut));
-    super.initState();
-    animationController.addListener((){
-      setState(() {
-        
-      });
-    });
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -98,97 +69,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
              )
             ),
           ),
-           Positioned(
-            
-            
-            right: 30,
-            bottom: 630,
-            child: Stack(
-              
-              children: <Widget>[
-
-                 Transform.translate(
-                   offset: Offset.fromDirection(getRadiansFromDegree(200), degOneTranlationAnimation.value *100),
-                   child: Transform(
-                      transform:Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value))..scale(degOneTranlationAnimation.value),
-                      alignment: Alignment.center,
-
-                      child: CircularButton(
-                      
-                      color: Colors.orangeAccent,
-                      width: 50,
-                      height: 50,
-                      icon: Icon(
-                        Icons.person,
-                        color:Colors.white
-                      ),
-                ),
-                   ),
-                 ),
-                Transform.translate
-                (
-                   offset: Offset.fromDirection(getRadiansFromDegree(170),degTwoTranlationAnimation.value *100),
-                  child: Transform(
-                     transform:Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value))..scale(degTwoTranlationAnimation.value),
-                      alignment: Alignment.center,
-                                      child: CircularButton(
-                      
-                      color: Colors.blue,
-                      width: 50,
-                      height: 50,
-                      icon: Icon(
-                        Icons.add,
-                        color:Colors.white
-                      ),
-                    ),
-                  ),
-                ),
-                Transform.translate(
-                                  
-                     offset: Offset.fromDirection(getRadiansFromDegree(140),  degthreeTranlationAnimation.value *100),
-                    child: Transform(
-                     transform:Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value))..scale(degthreeTranlationAnimation.value),
-                      alignment: Alignment.center,
-                     child: CircularButton(
-                      
-                      color: Colors.black,
-                      
-                      width: 50,
-                      height: 50,
-                      icon: Icon(
-                        Icons.camera_alt,
-                        color:Colors.white
-                      ),
-                  ),
-                    ),
-                ),
-                Transform(
-                   transform:Matrix4.rotationZ(getRadiansFromDegree(rotationAnimation.value)),
-                      alignment: Alignment.center,
-                                  child: CircularButton(
-                    
-                   
-                    color: Colors.red,
-                    
-                    width: 60,
-                    height: 60,
-                    icon: Icon(
-                      Icons.menu,
-                      color:Colors.white
-                    ),
-                    onClick: (){
-                      if(animationController.isCompleted){
-                        animationController.reverse();
-                      }
-                      else{
-                        animationController.forward();
-                      }
-                    },
-                  ),
-                )
-              ],
-            ),
-          ),
+           
           
           SafeArea(
             
@@ -319,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                               borderRadius: BorderRadius.circular(8)
                           ),
                           elevation: 4,
-                            color: Color(0xFFD500F9),
+                            color: Color(0xFFF50057),
                             
                             child: Ink.image(image: AssetImage('images/stat.png'), height: 100, alignment: Alignment.center, 
 
@@ -404,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             
                             
                              onPressed: (){
-                             Route route = MaterialPageRoute(builder: (bc) => Proveedores());
+                             Route route = MaterialPageRoute(builder: (bc) => MenuProveedor());
                                Navigator.of(context).push(route);
                               
                              },

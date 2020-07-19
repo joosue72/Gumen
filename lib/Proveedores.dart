@@ -4,7 +4,7 @@ import 'package:gumen/CrearProveedor.dart';
 import 'package:gumen/Menu.dart';
 import 'package:intl/intl.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
-
+import 'MenuProveedores.dart';
 
 
 class Proveedores extends StatefulWidget {
@@ -446,7 +446,7 @@ class _ProveedoresState extends State<Proveedores> {
         IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
           Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => HomeScreen()),
+    MaterialPageRoute(builder: (context) => MenuProveedor()),
     
   );
 
