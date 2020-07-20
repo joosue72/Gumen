@@ -5,6 +5,7 @@ import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
 import 'package:gumen/MenuGraficas.dart';
 import 'package:gumen/Meta/Grafica_Meta.dart';
+import 'Meta/Ganancias.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
@@ -313,6 +314,34 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     
                                
                                Route route = MaterialPageRoute(builder: (bc) => Meta());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
+                           
+                        ),
+                         Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                            color: Colors.white,
+                            
+                            child: Ink.image(image: AssetImage('images/meta.png'), height: 100, alignment: Alignment.center, 
+
+                           ) , 
+                            
+                            
+                             onPressed: (){
+
+                    
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => Ganancias());
                                Navigator.of(context).push(route);
                               
                              },

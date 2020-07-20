@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gumen/Animation/FadeAnimation.dart';
@@ -7,6 +8,9 @@ import 'Menu.dart';
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final myController = TextEditingController();
+    final db = Firestore.instance;
+     String t ;
     SystemChrome.setEnabledSystemUIOverlays([]);
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -74,7 +78,10 @@ class Login extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(10),
                           child: TextField(
+                            obscureText: true,
+                           controller: myController,
                             decoration: InputDecoration(
+                              
                               border: InputBorder.none,
                               hintText: "Password",
                               hintStyle: TextStyle(color: Colors.grey)
@@ -98,9 +105,68 @@ class Login extends StatelessWidget {
                               color: Colors.black,
                              child: Text("Login", style: TextStyle(color: Colors.white),),
                              onPressed: (){
+
+                                 
+
+                                  db
+                                          .collection("Password")
+                                          .snapshots()
+                                          .listen((result) {
+                                        result.documents.forEach((result) {
+                                          t = result.data['Password'].toString();
+
+                                           if(myController.text == t.toString())
+                                            {
+
+                                                Route route = MaterialPageRoute(builder: (bc) => HomeScreen());
+                                                Navigator.of(context).push(route);
+                                              
+                                            }
+
+                                             else
+                                              {
+                                                
+                                                      return showDialog<void>(
+                                                        context: context,
+                                                        barrierDismissible: false, // user must tap button!
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialog(
+                                                            title: Text('Contraseña Incorrecta', textAlign: TextAlign.center),
+                                                            content: SingleChildScrollView(
+                                                              child: ListBody(
+                                                                children: <Widget>[
+                                                                  Image.asset(
+                                                                      "images/wrong.gif",
+                                                                      height: 125.0,
+                                                                      width: 125.0,
+                                                                    )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              FlatButton(
+                                                                child: Text('Approve'),
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    
+                                              }
+                                          
+                                           
+                                        });
+                                              
+                                  });
+
                                
-                               Route route = MaterialPageRoute(builder: (bc) => HomeScreen());
-                               Navigator.of(context).push(route);
+                             
+
+                              
+                              
                               
                              },
                       )
