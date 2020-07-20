@@ -69,7 +69,9 @@ class _MenuProveedorState extends State<MenuProveedor> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        
                         CircleAvatar(
+                          
                           radius: 42,
                           backgroundColor: Color(0xFFFFC107),
                           backgroundImage: AssetImage(

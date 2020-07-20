@@ -22,25 +22,24 @@ class _ProductoState extends State<CrearProducto> {
 TextFormField buildTextFormFieldNombre() {
   
     return TextFormField(
-      controller: _textFieldController,
-      decoration: InputDecoration(
-        icon: Icon(
-          Icons.storage,
-          color: Colors.black,
-        ),
-        labelText: 'Producto',
-        fillColor: Colors.white,
-        
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-        filled: true,
-      ),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'No deje Campos Vacios';
-        }
-      },
-      onSaved: (value) => producto = value,
-    );
+                keyboardType: TextInputType.text,
+                controller: _textFieldController,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                 borderSide: BorderSide(color: Color(0xFFFFC107)),
+                 borderRadius: BorderRadius.all(Radius.circular(30))
+              ),
+              focusedBorder: OutlineInputBorder(
+                 borderSide: BorderSide(color: Colors.transparent),
+                 borderRadius: BorderRadius.all(Radius.circular(30))
+                 ),
+                 prefixIcon: Icon(Icons.storage),
+                 hintText: "Crear Producto",
+                 filled: true,
+                 fillColor: Colors.grey[200]
+            ),
+             
+            );
   }
 
 

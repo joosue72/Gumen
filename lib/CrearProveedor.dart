@@ -19,25 +19,24 @@ class _CrearProveedorState extends State<CrearProveedor> {
   TextFormField crearnuevoProveedor() {
   
     return TextFormField(
-      controller: _textFieldController,
-      decoration: InputDecoration(
-        icon: Icon(
-          Icons.person,
-          color: Colors.black,
-        ),
-        labelText: 'Proveedor',
-        fillColor: Colors.white,
-        
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-        filled: true,
-      ),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'No deje Campos Vacios';
-        }
-      },
-      onSaved: (value) => nombre = value,
-    );
+                keyboardType: TextInputType.text,
+                controller: _textFieldController,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                 borderSide: BorderSide(color: Color(0xFF64DD17)),
+                 borderRadius: BorderRadius.all(Radius.circular(30))
+              ),
+              focusedBorder: OutlineInputBorder(
+                 borderSide: BorderSide(color: Colors.transparent),
+                 borderRadius: BorderRadius.all(Radius.circular(30))
+                 ),
+                 prefixIcon: Icon(Icons.edit),
+                 hintText: "Crear Proveedor",
+                 filled: true,
+                 fillColor: Colors.grey[200]
+            ),
+             
+            );
   }
 
 
