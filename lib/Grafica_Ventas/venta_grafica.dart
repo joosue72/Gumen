@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gumen/Menu.dart';
+import 'package:gumen/MenuGraficas.dart';
 import 'package:gumen/Ventas.dart';
 import 'venta_widget.dart';
 
@@ -210,7 +211,7 @@ class _venta_graficaState extends State<venta_grafica> {
         IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
           Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => HomeScreen()),
+    MaterialPageRoute(builder: (context) => MenuGrafica()),
   );
 
         }),
