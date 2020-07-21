@@ -86,7 +86,7 @@ class _NuevoEmpleadoState extends State<NuevoEmpleado> {
                  Route route = MaterialPageRoute(builder: (bc) => Nomina());
                                Navigator.of(context).push(route);
                                nombre = _textFieldController.text.toString();
-                               Firestore.instance.collection('NombresNomina').document("$nombre").setData({'Nombre': '$nombre'});                        
+                               Firestore.instance.collection('NombresNomina').document("$nombre").setData({'Empleado': '$nombre'});                        
             },
 ),
               ),
