@@ -15,10 +15,12 @@ import 'package:gumen/MenuProveedores.dart';
 final db = Firestore.instance;
 String obtnombre;
 String id;
-double pago, abono, total;
+dynamic pago, abono=0, total=0;
 var selectedCurrency1, selectedType1;
 
 class _DetallesProveedoresState extends State<DetallesProveedores> {
+  
+
   @override
   Widget build(BuildContext context) {
      return Scaffold(
