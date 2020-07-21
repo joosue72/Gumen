@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Ventas.dart';
-import 'package:flutter/widgets.dart';
+import 'Nomina.dart';
 
+ class NuevoEmpleado extends StatefulWidget {
+  NuevoEmpleado({Key key}) : super(key: key);
 
-class CrearProducto extends StatefulWidget {
- 
   @override
-  _ProductoState createState() => _ProductoState();
+  _NuevoEmpleadoState createState() => _NuevoEmpleadoState();
 }
 
-  final db = Firestore.instance;
+final db = Firestore.instance;
   String id;
-  String producto;
+  String nombre;
   TextEditingController _textFieldController = TextEditingController();
 
-class _ProductoState extends State<CrearProducto> {
+class _NuevoEmpleadoState extends State<NuevoEmpleado> {
 
-
-TextFormField buildTextFormFieldNombre() {
+  TextFormField buildTextFormFieldNombre() {
   
     return TextFormField(
                 keyboardType: TextInputType.text,
                 controller: _textFieldController,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                 borderSide: BorderSide(color: Color(0xFFFFC107)),
+                 borderSide: BorderSide(color: Color(0xFFF4511E)),
                  borderRadius: BorderRadius.all(Radius.circular(30))
               ),
               focusedBorder: OutlineInputBorder(
@@ -33,7 +31,7 @@ TextFormField buildTextFormFieldNombre() {
                  borderRadius: BorderRadius.all(Radius.circular(30))
                  ),
                  prefixIcon: Icon(Icons.storage),
-                 hintText: "Crear Producto",
+                 hintText: "Nuevo Empleado",
                  filled: true,
                  fillColor: Colors.grey[200]
             ),
@@ -41,19 +39,9 @@ TextFormField buildTextFormFieldNombre() {
             );
   }
 
-
-
-
-
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     return Scaffold(
        
       appBar: _getCustomAppBar(), 
       body: ListView(
@@ -72,7 +60,7 @@ TextFormField buildTextFormFieldNombre() {
                 minWidth: 250.0,
                 height: 50.0,
                 child: RaisedButton(
-    color: Colors.orange, 
+    color: Color(0xFFF4511E), 
     child: Row( 
     mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.max, 
@@ -95,10 +83,10 @@ TextFormField buildTextFormFieldNombre() {
     ],
     ),
             onPressed: () {
-                 Route route = MaterialPageRoute(builder: (bc) => Ventas());
+                 Route route = MaterialPageRoute(builder: (bc) => Nomina());
                                Navigator.of(context).push(route);
-                               producto = _textFieldController.text.toString();
-                               Firestore.instance.collection('VentasProducto').document("$producto").setData({'Producto': '$producto', 'Cantidad': 0});                        
+                               nombre = _textFieldController.text.toString();
+                               Firestore.instance.collection('NombresNomina').document("$nombre").setData({'Nombre': '$nombre'});                        
             },
 ),
               ),
@@ -108,9 +96,7 @@ TextFormField buildTextFormFieldNombre() {
       ),
       
     );
-       
   }
-
   _getCustomAppBar(){
   return PreferredSize(
     preferredSize: Size.fromHeight(60),
@@ -122,7 +108,7 @@ TextFormField buildTextFormFieldNombre() {
           end: Alignment.centerRight,
           colors: [
             Color(0xFFFFC107),
-            Color(0xFFFFE57F),
+            Color(0xFFF4511E),
           ],
         ),
       ),
@@ -132,18 +118,15 @@ TextFormField buildTextFormFieldNombre() {
         IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
           Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Ventas()),
+    MaterialPageRoute(builder: (context) => Nomina()),
     
   );
 
         }),
-        Text('Crear Producto', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
-        IconButton(icon: Icon(Icons.create), onPressed: (){}),
+        Text('Nuevo Empleado', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        IconButton(icon: Icon(Icons.person_add), onPressed: (){}),
       ],),
     ),
   );
 }
-
 }
-
- 

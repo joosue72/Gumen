@@ -1,16 +1,15 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gumen/Empleados.dart';
 import 'package:gumen/Gastos.dart';
 import 'package:gumen/MenuGraficas.dart';
 import 'package:gumen/Meta/Grafica_Meta.dart';
-import 'Meta/Ganancias.dart';
 import 'Ventas.dart';
 import 'VentasPendientes.dart';
 import 'Gastos.dart';
 import 'Inventario.dart';
 import 'MenuProveedores.dart';
+import 'MenuNominas.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -181,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => Empleados());
+                               Route route = MaterialPageRoute(builder: (bc) => MenuNominas());
                                Navigator.of(context).push(route);
                               
                              },
@@ -320,34 +319,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                             ),
                            
                         ),
-                         Card(
-                          shape:RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)
-                          ),
-                          elevation: 4,
-                          child: RaisedButton(
-                             shape:RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)
-                          ),
-                          elevation: 4,
-                            color: Colors.white,
-                            
-                            child: Ink.image(image: AssetImage('images/meta.png'), height: 100, alignment: Alignment.center, 
-
-                           ) , 
-                            
-                            
-                             onPressed: (){
-
-                    
-                               
-                               Route route = MaterialPageRoute(builder: (bc) => Ganancias());
-                               Navigator.of(context).push(route);
-                              
-                             },
-                            ),
-                           
-                        ),
+                         
 
                        
                       ],

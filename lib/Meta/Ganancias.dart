@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'dart:math';
-
-import '../Menu.dart';
+import 'package:gumen/MenuGraficas.dart';
 
 void main() => runApp(Ganancias());
 
@@ -272,7 +270,7 @@ class _BarGraphDemoState extends State<BarGraphDemo> {
         IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
           Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => HomeScreen()),
+    MaterialPageRoute(builder: (context) => MenuGrafica()),
     
   );
 
