@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gumen/Grafica_Gastos/venta_grafica_gastos.dart';
 import 'package:gumen/Menu.dart';
+import 'Grafica_Nominas/venta_grafica_gastos.dart';
 import 'Grafica_Ventas/venta_grafica.dart';
 
 
@@ -114,7 +115,7 @@ class _MenuGraficaState extends State<MenuGrafica> with SingleTickerProviderStat
                             
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => HomeScreen());
+                               Route route = MaterialPageRoute(builder: (bc) => venta_grafica3());
                                Navigator.of(context).push(route);
                               
                              },
@@ -181,6 +182,7 @@ class _MenuGraficaState extends State<MenuGrafica> with SingleTickerProviderStat
                             ),
                         ),
 
+                        
                         
 
                         

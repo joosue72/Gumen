@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gumen/Menu.dart';
 import 'package:gumen/Ventas.dart';
-import 'venta_widget.dart';
+import 'venta_widget_gastos.dart';
 
-class venta_grafica extends StatefulWidget {
+class venta_grafica3 extends StatefulWidget {
  
   
 
   @override
-  _venta_graficaState createState() => _venta_graficaState();
+  _venta_grafica3State createState() => _venta_grafica3State();
 }
 
-class _venta_graficaState extends State<venta_grafica> {
+class _venta_grafica3State extends State<venta_grafica3> {
 
    PageController _controller;
   int currentPage = DateTime.now().month - 1;
@@ -26,7 +26,7 @@ class _venta_graficaState extends State<venta_grafica> {
     super.initState();
 
     _query = Firestore.instance
-        .collection('Ventas')
+        .collection('Nomina')
         .where("Mes", isEqualTo: currentPage + 1)
         .snapshots();
 
@@ -48,9 +48,23 @@ class _venta_graficaState extends State<venta_grafica> {
 
   @override
   Widget build(BuildContext context) {
+
+        
     return Scaffold(
-     appBar: _getCustomAppBar(),
+
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0),
+        child: AppBar(
+          centerTitle: true,
+          title: Text('Lista de Nominas'),
+        backgroundColor: Colors.orange
+        ),
+        
+      ),
+      
       bottomNavigationBar: BottomAppBar(
+
+        
           notchMargin: 8.0,
           shape: CircularNotchedRectangle(),
           child: Row(
@@ -63,34 +77,41 @@ class _venta_graficaState extends State<venta_grafica> {
                   currentType = GraphType.LINES;
                 });
               }),
+              
               SizedBox(width: 48.0),
-             _bottomAction(FontAwesomeIcons.chartPie, () {
+               _bottomAction(FontAwesomeIcons.chartPie, () {
                 setState(() {
                   currentType = GraphType.PIE;
                 });
               }),
+              
             ],
           ),
         ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        
         child: Icon(Icons.add),
-        backgroundColor: Colors.orange,
         onPressed: () {
             Navigator.push(context,  MaterialPageRoute(builder: (context) => Ventas()),);
 
           
         },
       ),
+      
       body: _body(),
     );
+    
   }
 
   Widget _body() {
+    
     return SafeArea(
+      
       child: Column(
+        
         children: <Widget>[
+          
+
           _selector(),
           StreamBuilder<QuerySnapshot>(
             stream: _query,
@@ -150,6 +171,7 @@ class _venta_graficaState extends State<venta_grafica> {
     );
   }
 
+ 
   Widget _selector() {
     return SizedBox.fromSize(
       size: Size.fromHeight(70.0),
@@ -158,7 +180,7 @@ class _venta_graficaState extends State<venta_grafica> {
           setState(() {
             currentPage = newPage;
             _query = Firestore.instance
-                .collection('Ventas')
+                .collection('Nomina')
                 .where("Mes", isEqualTo: currentPage + 1)
                 .snapshots();
           });
@@ -181,35 +203,5 @@ class _venta_graficaState extends State<venta_grafica> {
       ),
     );
   }
-  _getCustomAppBar(){
-  return PreferredSize(
-    preferredSize: Size.fromHeight(50),
-    child: Container(
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Colors.deepOrangeAccent,
-            Colors.yellowAccent,
-          ],
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-        IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
-          Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => HomeScreen()),
-  );
+}
 
-        }),
-        Text('Lista Ventas', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
-        IconButton(icon: Icon(Icons.trending_up), onPressed: (){}),
-      ],),
-    ),
-  );
-}
-}
