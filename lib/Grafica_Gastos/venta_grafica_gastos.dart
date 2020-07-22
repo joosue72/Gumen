@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gumen/MenuGraficas.dart';
 import 'package:gumen/Ventas.dart';
 import 'venta_widget_gastos.dart';
 
@@ -52,15 +53,9 @@ class _venta_grafica2State extends State<venta_grafica2> {
         
     return Scaffold(
 
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(40.0),
-        child: AppBar(
-          centerTitle: true,
-          title: Text('Lista de Gastos'),
-        backgroundColor: Colors.orange
-        ),
+      appBar: _getCustomAppBar(),
         
-      ),
+      
       
       bottomNavigationBar: BottomAppBar(
 
@@ -203,5 +198,36 @@ class _venta_grafica2State extends State<venta_grafica2> {
       ),
     );
   }
+  _getCustomAppBar(){
+  return PreferredSize(
+    preferredSize: Size.fromHeight(50),
+    child: Container(
+      alignment: Alignment.bottomCenter,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Color(0xFFFFC107),
+            Color(0xFF0277BD),
+          ],
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+        IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
+          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => MenuGrafica()),
+  );
+
+        }),
+        Text('Lista Gastos', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        IconButton(icon: Icon(Icons.trending_up), onPressed: (){}),
+      ],),
+    ),
+  );
+}
 }
 

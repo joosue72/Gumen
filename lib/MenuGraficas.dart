@@ -4,7 +4,7 @@ import 'package:gumen/Grafica_Gastos/venta_grafica_gastos.dart';
 import 'package:gumen/Menu.dart';
 import 'Grafica_Nominas/venta_grafica_gastos.dart';
 import 'Grafica_Ventas/venta_grafica.dart';
-
+import 'Meta/Ganancias.dart';
 
 
 
@@ -23,7 +23,7 @@ class _MenuGraficaState extends State<MenuGrafica> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-
+    
      assert(!_debugLocked);
     
     // to get size
@@ -37,6 +37,7 @@ class _MenuGraficaState extends State<MenuGrafica> with SingleTickerProviderStat
 
 
     return Scaffold(
+      
       backgroundColor: Colors.black,
       body: Stack(
 
@@ -69,17 +70,36 @@ class _MenuGraficaState extends State<MenuGrafica> with SingleTickerProviderStat
               padding: EdgeInsets.all(16.0),
               child: Column(
                 children: <Widget>[
+                  
                   Container(
                     height: 84,
                     margin: EdgeInsets.only(bottom: 30),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        
                         CircleAvatar(
+
                           radius: 42,
                           backgroundColor: Color(0xFFFFC107),
                           backgroundImage: AssetImage(
-                              'assets/logogumen3.png'),    
+                            
+                              'assets/logogumen3.png'),
+                              child: Visibility( 
+                              child: IconButton( icon: Icon(Icons.arrow_back_ios), onPressed: (){
+          Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => HomeScreen()),
+    
+  );
+
+        }),
+        maintainInteractivity: true,
+        maintainSize: true, 
+  maintainAnimation: true,
+        maintainState: true,
+        visible: false,
+        ),   
                         ),
                         SizedBox(
                           width: 16,
@@ -183,8 +203,33 @@ class _MenuGraficaState extends State<MenuGrafica> with SingleTickerProviderStat
                         ),
 
                         
-                        
+                          Card(
+                          shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                          child: RaisedButton(
+                             shape:RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          elevation: 4,
+                            color: Color(0xFF64DD17),
+                            
+                            child: Ink.image(image: AssetImage('images/stat5.png'), height: 100, alignment: Alignment.center, 
 
+                            
+                           ) , 
+                            
+                            
+                             onPressed: (){
+                               
+                               Route route = MaterialPageRoute(builder: (bc) => Ganancias());
+                               Navigator.of(context).push(route);
+                              
+                             },
+                            ),
+                        ),
+                        
                         
                         
                       ],
@@ -196,8 +241,10 @@ class _MenuGraficaState extends State<MenuGrafica> with SingleTickerProviderStat
           ),
         ],
       ),
+      
     );
   }
+ 
 }
 
 class CircularButton extends StatelessWidget {

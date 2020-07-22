@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gumen/MenuProveedores.dart';
+import 'MenuNominas.dart';
 
 
-
-
- class DetallesProveedores extends StatefulWidget {
-  DetallesProveedores({Key key}) : super(key: key);
+ class DetallesNomina extends StatefulWidget {
+  DetallesNomina({Key key}) : super(key: key);
 
   @override
-  _DetallesProveedoresState createState() => _DetallesProveedoresState();
+  _DetallesNominaState createState() => _DetallesNominaState();
 }
 
 final db = Firestore.instance;
 String obtnombre;
 String id;
-dynamic pago, abono=0, total=0;
+double pago;
 var selectedCurrency1, selectedType1;
 
-class _DetallesProveedoresState extends State<DetallesProveedores> {
-  
-
+class _DetallesNominaState extends State<DetallesNomina> {
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       appBar: _getCustomAppBar(),
       body: ListView(
         scrollDirection: Axis.vertical,
@@ -42,7 +38,7 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
                     SizedBox(width: 55.0,),
                      StreamBuilder<QuerySnapshot>(
                        
-                  stream: db.collection('NombresProveedores').snapshots(),
+                  stream: db.collection('NombresNomina').snapshots(),
                   
                   builder: (context, snapshot) {
                     
@@ -75,7 +71,7 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
                               final snackBar = SnackBar(
                                 backgroundColor: Colors.black,
                                 content: Text(
-                                  'Proveedor: $currencyValue',
+                                  'Empleado: $currencyValue',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               );
@@ -87,7 +83,7 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
                             value: selectedCurrency1,
                             isExpanded: false,
                             hint: new Text(
-                              "Seleccione Proveedor",
+                              "Seleccione Empleado",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -104,7 +100,7 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
             ),
           ),
            StreamBuilder<QuerySnapshot>(
-            stream: db.collection('Proveedores').where("NombreProveedor", isEqualTo: selectedCurrency1).snapshots(),
+            stream: db.collection('Nomina').where("Empleado", isEqualTo: selectedCurrency1).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(children: snapshot.data.documents.map((doc) => cardbuild(doc)).toList());
@@ -117,7 +113,7 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
       ),
     );
   }
-  Widget cardbuild(DocumentSnapshot doc)
+   Widget cardbuild(DocumentSnapshot doc)
   {
     return Column(children: <Widget>[
        Padding(
@@ -149,34 +145,29 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
     ],);
    
   }
-
   Widget myDetailsContainer1(DocumentSnapshot doc) {
     pago = doc.data['Pago'];
-    abono = doc.data['Abono'];
-    total = pago - abono;
+    
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
-          child: Container(child: Text("${doc.data['NombreProveedor']}",
-            style: TextStyle(color: Color(0xFFFFC107), fontSize: 24.0,fontWeight: FontWeight.bold),)),
+          child: Container(child: Text("${doc.data['Empleado']}",
+            style: TextStyle(color: Color(0xFFF4511E), fontSize: 24.0,fontWeight: FontWeight.bold),)),
         ),
         Container(child: Text(" ${doc.data['Fecha']}",
                     style: TextStyle(color: Colors.black54, fontSize: 12.0, ),)),
+                    
                     SizedBox(height: 10,),
-                    Container(child: Text(" (${doc.data['Cantidad']}) \u00B7 Kg",
-                    style: TextStyle(color: Colors.black54, fontSize: 18.0,),)),
-                    SizedBox(height: 10,),
-                    Container(child: Text("Total ${doc.data['Pago']}\$ \u00B7  Abono ${doc.data['Abono']}\$" ,
+                    Container(child: Text("Pago ${doc.data['Pago']}\$ " ,
                     style: TextStyle(color: Colors.black54, fontSize: 18.0,), )
                     
                     ),
                     SizedBox(height: 10,),
                     
                     
-                     Container(child: Text(" Adeudo = "+total.toString()+"\$",
-                    style: TextStyle(color: Colors.black, fontSize: 18.0,),)),
+                    
                     
         SizedBox(height: 10,),
         Padding(
@@ -193,7 +184,7 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
       shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(5.0),
     ),
-      color: Color(0xFF64DD17), // button color
+      color: Color(0xFFF4511E), // button color
       child: InkWell(
         splashColor: Colors.green, // splash color
         onTap:  () {
@@ -219,7 +210,7 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
       ],
     );
   }
-  _getCustomAppBar(){
+   _getCustomAppBar(){
   return PreferredSize(
     preferredSize: Size.fromHeight(60),
     child: Container(
@@ -230,7 +221,7 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
           end: Alignment.centerRight,
           colors: [
             Color(0xFFFFC107),
-            Color(0xFF64DD17),
+            Color(0xFFF4511E),
           ],
         ),
       ),
@@ -240,12 +231,12 @@ class _DetallesProveedoresState extends State<DetallesProveedores> {
         IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: (){
           Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => MenuProveedor()),
+    MaterialPageRoute(builder: (context) => MenuNominas()),
   );
 
         }),
-        Text('Detalles Proveedores', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
-        IconButton(icon: Icon(Icons.group), onPressed: (){}),
+        Text('Detalles Nominas', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500),),
+        IconButton(icon: Icon(Icons.payment), onPressed: (){}),
       ],),
     ),
   );
@@ -256,18 +247,18 @@ _displayDialog(BuildContext context, DocumentSnapshot doc) async {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Editar Abono'),
+            title: Text('Editar Pago'),
             content: TextField(
               keyboardType: TextInputType.number,
               controller: _textFieldController,
-              decoration: InputDecoration(suffixText:'${doc.data['Abono']}'), 
+              decoration: InputDecoration(suffixText:'${doc.data['Pago']}'), 
             ),
             actions: <Widget>[
               new FlatButton(
                 child: new Text('Guardar'),
                 onPressed: () {
-                  abono = double.parse(_textFieldController.text);
-                  print(abono);
+                  pago = double.parse(_textFieldController.text);
+                  print(pago);
                   Navigator.of(context).pop();
                   
                   updateCantidad(doc);
@@ -299,7 +290,7 @@ showAlertDialog(BuildContext context, DocumentSnapshot doc) {
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text("Alerta!"),
-    content: Text("¿Estás seguro de que quieres eliminar este Proveedor?"),
+    content: Text("¿Estás seguro de que quieres eliminar este Registro?"),
     actions: [
       cancelButton,
       continueButton,
@@ -315,16 +306,14 @@ showAlertDialog(BuildContext context, DocumentSnapshot doc) {
   );
 }
   void deleteData(DocumentSnapshot doc) async {
-    await db.collection('NombresProveedores').document(doc.documentID).delete();
+    await db.collection('Nomina').document(doc.documentID).delete();
     setState(() => id = null);
   }
   void updateCantidad(DocumentSnapshot doc) async {
-    abono = double.parse(_textFieldController.text);
+    pago = double.parse(_textFieldController.text);
 
-    await db.collection('Proveedores').document(doc.documentID).updateData({'Abono': abono});
+    await db.collection('Nomina').document(doc.documentID).updateData({'Pago': pago});
   
     
   }
-
-  
 }

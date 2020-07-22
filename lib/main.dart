@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gumen/Grafica_Gastos/details_page_gastos.dart';
-import 'package:gumen/Grafica_Nominas/details_page_gastos.dart';
-import 'package:gumen/RegistroCliente.dart';
 import 'dart:async';
 import 'Login.dart';
-import 'Grafica_Ventas/details_page.dart';
+
 
 
 
@@ -13,28 +10,7 @@ void main() {
   runApp(new MaterialApp(
   debugShowCheckedModeBanner: false,
   home: MyApp(),
-  onGenerateRoute: (settings) {
-         if(settings.name == '/details'){
-           DetailsPage params = settings.arguments;
-           return MaterialPageRoute(builder: (BuildContext context){
-             return DetailsParams(params: params,);});
-         }
-
-         if(settings.name == '/details2'){
-           DetailsPage2 params = settings.arguments;
-           return MaterialPageRoute(builder: (BuildContext context){
-             return DetailsParams2(params: params,);});
-         }
-          if(settings.name == '/details3'){
-           DetailsPage3 params = settings.arguments;
-           return MaterialPageRoute(builder: (BuildContext context){
-             return DetailsParams3(params: params,);});
-         }
-        },
-  routes: {
-    'Empleado' : (BuildContext context) => RegistroCliente(),
-    
-  },
+  
 ));
 }
 

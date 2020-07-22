@@ -1,21 +1,19 @@
-
 import 'package:flutter/material.dart';
-import 'DetallesProveedores.dart';
-import 'package:gumen/NombresProveedores.dart';
-import 'package:gumen/Proveedores.dart';
 import 'Menu.dart';
+import 'Nomina.dart';
+import 'DetallesNomina.dart';
+import 'NombresNomina.dart';
 
-
- class MenuProveedor extends StatefulWidget {
-  MenuProveedor({Key key}) : super(key: key);
+ class MenuNominas extends StatefulWidget {
+  MenuNominas({Key key}) : super(key: key);
 
   @override
-  _MenuProveedorState createState() => _MenuProveedorState();
+  _MenuNominasState createState() => _MenuNominasState();
 }
 
 bool _debugLocked = false;
 
-class _MenuProveedorState extends State<MenuProveedor> {
+class _MenuNominasState extends State<MenuNominas> {
   @override
   Widget build(BuildContext context) {
     assert(!_debugLocked);
@@ -121,13 +119,13 @@ class _MenuProveedorState extends State<MenuProveedor> {
                           elevation: 4,
                             color: Color(0xFFF57F17),
                             
-                            child: Ink.image(image: AssetImage('images/proveedor.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/nomina2.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => Proveedores());
+                               Route route = MaterialPageRoute(builder: (bc) => Nomina());
                                Navigator.of(context).push(route);
                               
                              },
@@ -149,13 +147,13 @@ class _MenuProveedorState extends State<MenuProveedor> {
                           elevation: 4,
                             color: Color(0xFF00BCD4),
                             
-                            child: Ink.image(image: AssetImage('images/proveedor2.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/nomina3.png'), height: 100, alignment: Alignment.center, 
                            ) , 
 
                             
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => NombresProveedores());
+                               Route route = MaterialPageRoute(builder: (bc) => NombresNomina());
                                Navigator.of(context).push(route);
                               
                              },
@@ -179,7 +177,7 @@ class _MenuProveedorState extends State<MenuProveedor> {
                           elevation: 4,
                             color: Color(0xFFFFC107),
                             
-                            child: Ink.image(image: AssetImage('images/proveedor3.png'), height: 100, alignment: Alignment.center, 
+                            child: Ink.image(image: AssetImage('images/nomina4.png'), height: 100, alignment: Alignment.center, 
 
                             
                            ) , 
@@ -187,7 +185,7 @@ class _MenuProveedorState extends State<MenuProveedor> {
                             
                              onPressed: (){
                                
-                               Route route = MaterialPageRoute(builder: (bc) => DetallesProveedores());
+                               Route route = MaterialPageRoute(builder: (bc) => DetallesNomina());
                                Navigator.of(context).push(route);
                               
                              },
@@ -210,7 +208,6 @@ class _MenuProveedorState extends State<MenuProveedor> {
     );
   }
 }
-
 class CircularButton extends StatelessWidget {
  final double width;
  final double height;
