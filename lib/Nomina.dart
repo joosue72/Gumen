@@ -259,6 +259,7 @@ void createData() async {
 
       String mes = DateFormat('MMM').format(now);
       String dia = DateFormat('d').format(now);
+      String ano = DateFormat('EEE').format(now);
       int numerofecha;
 
 
@@ -302,7 +303,7 @@ void createData() async {
         break;
       }
       
-      DocumentReference ref = await db.collection('Nomina').add({'Empleado': '$selectedCurrency1', 'Pago': cantidad, 'Mes': numerofecha,'Dia': int.parse(dia), 'Fecha':fecha});
+      DocumentReference ref = await db.collection('Nomina').add({'Empleado': '$selectedCurrency1', 'Pago': cantidad, 'Mes': numerofecha,'Dia': int.parse(dia),'Año':2020, 'Fecha':fecha});
         
       setState(() => id = ref.documentID);
       
