@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gumen/Animation/FadeAnimation.dart';
 import 'Menu.dart';
-
+final myController = TextEditingController();
+    final db = Firestore.instance;
+     String t ;
 
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final myController = TextEditingController();
-    final db = Firestore.instance;
-     String t ;
+    
     SystemChrome.setEnabledSystemUIOverlays([]);
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -58,7 +58,7 @@ class Login extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  FadeAnimation(1.5, Text("Login", style: TextStyle(color: Color.fromRGBO(0, 0, 0, 100), fontWeight: FontWeight.bold, fontSize: 30),)),
+                  FadeAnimation(1.5, Text("Inicio De Sesión", style: TextStyle(color: Color.fromRGBO(0, 0, 0, 100), fontWeight: FontWeight.bold, fontSize: 30),)),
                   SizedBox(height: 30,),
                   FadeAnimation(1.7, Container(
                     decoration: BoxDecoration(
@@ -78,12 +78,16 @@ class Login extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.all(10),
                           child: TextField(
+                             onSubmitted: (myController)
+                            {
+                              validarLogin(context);
+                            },
                             obscureText: true,
                            controller: myController,
                             decoration: InputDecoration(
                               
                               border: InputBorder.none,
-                              hintText: "Password",
+                              hintText: "Contraseña",
                               hintStyle: TextStyle(color: Colors.grey)
                             ),
                           ),
@@ -105,10 +109,27 @@ class Login extends StatelessWidget {
                               color: Colors.black,
                              child: Text("Login", style: TextStyle(color: Colors.white),),
                              onPressed: (){
+                                validarLogin(context);
+                             },
+                      )
 
-                                 
+                    ),
 
-                                  db
+                  )
+                  
+                  ),
+                  
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  void validarLogin(BuildContext context)
+  {
+    db
                                           .collection("Password")
                                           .snapshots()
                                           .listen((result) {
@@ -161,28 +182,5 @@ class Login extends StatelessWidget {
                                         });
                                               
                                   });
-
-                               
-                             
-
-                              
-                              
-                              
-                             },
-                      )
-
-                    ),
-
-                  )
-                  
-                  ),
-                  
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }

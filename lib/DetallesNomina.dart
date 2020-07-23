@@ -13,7 +13,7 @@ import 'MenuNominas.dart';
 final db = Firestore.instance;
 String obtnombre;
 String id;
-double pago;
+dynamic pago;
 var selectedCurrency1, selectedType1;
 
 class _DetallesNominaState extends State<DetallesNomina> {
