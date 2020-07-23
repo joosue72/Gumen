@@ -72,20 +72,14 @@ class _venta_grafica2State extends State<venta_grafica2> {
                   currentType = GraphType.LINES;
                 });
               }),
-              _bottomAction(FontAwesomeIcons.chartPie, () {
+              
+              SizedBox(width: 48.0),
+             _bottomAction(FontAwesomeIcons.chartPie, () {
                 setState(() {
                   currentType = GraphType.PIE;
                 });
               }),
-              SizedBox(width: 48.0),
-              _bottomAction(FontAwesomeIcons.wallet, () {
-
-                
-                
-              }),
-              _bottomAction(FontAwesomeIcons.signOutAlt, () {
               
-              }),
             ],
           ),
         ),
