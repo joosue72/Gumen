@@ -11,9 +11,9 @@ import 'package:intl/intl.dart';
   DateTime now = DateTime.now();
   String fecha = DateFormat('kk:mm:ss \n EEE d MMM').format(now);
   String tcosto;
-  double obtcosto;
-  double total;
-  double total2;
+  dynamic obtcosto;
+  dynamic total;
+  dynamic total2;
 class VentasPendientes extends StatefulWidget {
  @override
   _VentasPendientesState createState() => _VentasPendientesState();
@@ -246,7 +246,11 @@ SizedBox(width: 8),
 
 
   void updateData(DocumentSnapshot doc) async {
-    await db.collection('Ventas').document(doc.documentID).updateData({'Pendiente': true});
+    total = doc.data['Saldo'];
+    total2 = doc.data['Costo'];
+
+    total2 += total;
+    await db.collection('Ventas').document(doc.documentID).updateData({'Pendiente': false, 'Costo':total2, 'Saldo': 0});
   }
 
   void updateCantidad(DocumentSnapshot doc) async {
