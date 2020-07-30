@@ -214,10 +214,12 @@ class _MenuGraficaState extends State<MenuGrafica> with SingleTickerProviderStat
                           ),
                           elevation: 4,
                             color: Color(0xFF64DD17),
-                            
+
+
                             child: Ink.image(image: AssetImage('images/stat5.png'), height: 100, alignment: Alignment.center, 
 
                             
+      
                            ) , 
                             
                             

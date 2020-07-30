@@ -39,7 +39,7 @@ class VentaWidget extends StatefulWidget {
           
      }),    
 
-     perDay2 = documents.where((doc) => doc['Dia'] ==(DateTime.now().day- 1))
+     perDay2 = documents.where((doc) => doc['Dia'] ==(DateTime.now().day))
         .map((doc) => doc['Pago'])
             .fold(0.0, (a, b) => a + b),
    
